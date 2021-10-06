@@ -24,3 +24,17 @@ a {
 .t4sg-color {
   color: #4ce4a9;
 }
+
+.title {
+  text-align: center;
+  margin-top: 2em;
+}
+.description {
+  text-align: center;
+}
+
+.description {
+  line-height: 1.5;
+  font-size: 1.5rem;
+  max-width: 60%;
+}
