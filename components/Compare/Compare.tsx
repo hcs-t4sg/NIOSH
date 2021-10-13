@@ -2,86 +2,74 @@ import React, { useState } from "react";
 import { Container, Row, Col } from 'reactstrap';
 import {
   Box,
-  Button,
   FormControl,
   InputLabel,
-  MenuItem,
   Select,
   TextField,
   Typography,
 } from "@material-ui/core";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, ChartLabel, VerticalGridLines, LineMarkSeries, LineSeries} from 'react-vis';
+import LabDataView from "../LabDataView/LabDataView";
 
 const Compare = () => {
-  const categories = ["Lab1","Lab2","Lab3"];
   const parameters = ["Humidity","Temperature",];
   const information = ["Windows","Floor"]
   const [status, setStatus] = useState<string | null>(null);
   const [status2, setStatus2] = useState<string | null>(null);
   const [param, setParam] = useState<string | null>(null);
   const [otherinfo, setOtherInfo] = useState<string | null>(null);
-  var temphum = ""
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  {/* Load labs from Hasura, for now its hard coded*/}
+  const labsData = ["B-15", "302", "303", "446", "449/451", "454","Outdoor","B-01","309","351","355","424","460", "353"];
+
+  {/* Set up date picker*/}
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
 
 
   return (
     <section className="section position-relative">
       
       <Container>
-        <FormControl>
-            <InputLabel id="category-select-label">Lab</InputLabel>
-            <Select
-              labelId="category-select-label"
-              value = {status}
-              onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                setStatus(event.target.value as string);
-              }}
-            > 
-              {categories.map((category, index) => {
-                return <MenuItem key={index} value={index}> {category} </MenuItem>
-              })}
-        
-            </Select>
-          </FormControl>
-          
-          <FormControl>
-            <InputLabel id="category-select-label">Lab</InputLabel>
-            <Select
-              labelId="category-select-label"
-              fullWidth
-              value = {status2}
-              onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                setStatus2(event.target.value as string);
-              }}
-            > 
-              {categories.map((category, index) => {
-                return <MenuItem key={index} value={index}> {category} </MenuItem>
-              })}
-            </Select>
-          </FormControl>
+      
 
-          <Row> 
+          <Row>
+            <h3 className="font-weight-normal t4sg-color text-center">
+              Results: 
+            </h3>  
             <Col>  
         
-            <h3 className="font-weight-normal t4sg-color text-center">
-              Lab {status + 1} results: 
-            </h3> 
+
+            <LabDataView/>
            
             </Col>
 
             <Col>  
           
-            <h3 className="font-weight-normal t4sg-color text-center">
-              Lab {status2 + 1} results: 
-            </h3> 
-             
+            <LabDataView/>
+
             </Col>
          
             
           </Row>
 
       </Container>
-
+      <Box m = {20}> </Box>
       <Container>
+        <Row> 
+        <Col>
         <FormControl fullWidth>
             <InputLabel id="category-select-label">Parameters</InputLabel>
             <Select
@@ -97,12 +85,6 @@ const Compare = () => {
               })}
             </Select>
             
-            <Row> 
-              <h1> {'     '}</h1>
-              <h5 className="text-center"> Displaying predictions for: {param} </h5> </Row>
-
-
-
         </FormControl>
         <FormControl fullWidth>
             <InputLabel id="category-select-label">Other Information</InputLabel>
@@ -118,15 +100,23 @@ const Compare = () => {
               })}
             </Select>
           </FormControl>
+        </Col>
+        <Col>
+        <Row> 
+              <h1> {'     '}</h1>
+              <h5 className="text-center"> Displaying predictions for: {param} </h5> </Row>
           <Row> 
              <h1> {'     '}</h1>
               <h5 className="text-center"> Lab {status + 1}: {otherinfo} </h5> </Row>
           <Row>   <h5 className="text-center"> Lab {status2 + 1}: {otherinfo} </h5> </Row>
+          
+
+        </Col>
+        </Row>
       </Container>
-      <Container>
-     
-      </Container>
+
     </section>
+    
   );
 }
 export default Compare;
