@@ -14,7 +14,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {XYPlot, XAxis, YAxis, HorizontalGridLines, ChartLabel, VerticalGridLines, LineMarkSeries, LineSeries} from 'react-vis';
-import LabDataView from "../LabDataView/LabDataView";
+import LabDataCompare from "../LabDataCompare/LabDataCompare";
 
 const Compare = () => {
   const parameters = ["Humidity","Temperature",];
@@ -43,32 +43,10 @@ const Compare = () => {
     <section className="section position-relative">
       
       <Container>
-      
-
-          <Row>
-            <h3 className="font-weight-normal t4sg-color text-center">
+        <Row> 
+        <h3 className="font-weight-normal t4sg-color text-center">
               Results: 
             </h3>  
-            <Col>  
-        
-
-            <LabDataView/>
-           
-            </Col>
-
-            <Col>  
-          
-            <LabDataView/>
-
-            </Col>
-         
-            
-          </Row>
-
-      </Container>
-      <Box m = {20}> </Box>
-      <Container>
-        <Row> 
         <Col>
         <FormControl fullWidth>
             <InputLabel id="category-select-label">Parameters</InputLabel>
@@ -114,6 +92,25 @@ const Compare = () => {
         </Col>
         </Row>
       </Container>
+      
+      <Container>
+      
+
+          <Row>
+            
+            <Col>  
+        
+
+            <LabDataCompare/>
+           
+            </Col>
+         
+            
+          </Row>
+
+      </Container>
+      <Box m = {20}> </Box>
+      
 
     </section>
     

@@ -23,9 +23,11 @@ const LabDataView: React.FC = (props) => {
 
   {/* Load labs from Hasura, for now its hard coded*/}
   const labsData = ["B-15", "302", "303", "446", "449/451", "454","Outdoor","B-01","309","351","355","424","460", "353"];
-
+  const b15_temp = [{x: 10, y: 11}, {x: 150, y: 29}, {x: 300, y: 7}, {x: 400, y: 37}, {x: 500, y: 47},{x: 1000, y: 71} ]
+  const b15_hum = [{x: 5, y: 11}, {x: 34, y: 29}, {x: 80, y: 7}, {x: 9, y: 37}, {x: 7, y: 47},{x: 70, y: 71} ]
   {/* Set up date picker*/}
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
 
   return (
     <>
@@ -64,10 +66,18 @@ const LabDataView: React.FC = (props) => {
                 )})} 
         </Menu>
         
-        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> 
+        <DatePicker
+      selectsRange={true}
+      startDate={startDate}
+      endDate={endDate}
+      onChange={(update) => {
+        setDateRange(update);
+      }}
+      isClearable={true}
+    /> 
 
         {/* Load lab data on graph, for now, hard-coded*/}
-        <XYPlot width={500} height={500}>
+        <XYPlot width={1000} height={500}>
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis />
@@ -82,9 +92,10 @@ const LabDataView: React.FC = (props) => {
             curve={'curveMonotoneX'}
             color={'#1dd1a1'}
             style= {{fill: 'none'}}
-            data={[{x: 5, y: 11}, {x: 34, y: 29}, {x: 80, y: 7}, {x: 9, y: 37}, {x: 7, y: 47},{x: 70, y: 71} ]}
+            data={b15_hum}
             opacity = {1}
           />
+          
         </XYPlot>
       </Container>
     </>

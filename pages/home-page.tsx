@@ -24,12 +24,7 @@ const HomePage: React.FC = (props) => {
   return (
     <>
     <Container>
-      <div className="shadow-lg p-3 mb-5 bg-light rounded">
-        <h3 className="font-weight-normal text-dark"> <span className="t4sg-color"> Lab Selector</span></h3>
-      </div>
-     
-
-      <LabDataView/> 
+           <LabDataView/> 
 
       <Box m = {5}> 
       <a href="/comparison-page" className="btn btn-primary btn-block">
