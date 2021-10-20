@@ -1,5 +1,6 @@
 import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Client, createClient, Provider } from 'urql';
+import { authkey } from '../secrets.js';
 
 let urqlClient: Client;
 type UrqlContainerProps = {
@@ -10,11 +11,11 @@ export function UrqlContainer({ children }: UrqlContainerProps) {
     const token = null;
     urqlClient = useMemo(() => {
       return createClient({
-        url: 'http://localhost:8080/v1/graphql',
+        url: 'https://niosh.hasura.app/v1/graphql',
         fetchOptions: () => {
           return {
             headers: {
-              Authorization: token ? `Bearer ${token}` : '',
+              "x-hasura-admin-secret": authkey
             },
           };
         },
