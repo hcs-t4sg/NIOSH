@@ -7,11 +7,14 @@ import { useQuery } from 'urql';
 
 const NamesQuery = `
 query NamesQuery {
-    Users(where: {Name: {_eq: "Gavin"}}) {
-      Name
-      ID
-    }
+  observations {
+    humidity
+    id
+    lab
+    temperature
+    time
   }
+}
 `;
 
 type DatabaseDemoProps = {
@@ -30,7 +33,7 @@ function DatabaseDemo(props : DatabaseDemoProps) {
             Here are the names in our database:
             </h1>
             <p className={styles.description}>
-                {fetching ? "Getting your data" : error ? "There was an error" + error.message : data ? data.Users.map((a : any) => a.Name + " ") : "Something went wrong"}
+                {fetching ? "Getting your data" : error ? "There was an error" + error.message : data ? data.observations.map((a : any) => "b") : "Something went wrong"}
             </p>
         </main>
         </div>
