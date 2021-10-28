@@ -82,12 +82,12 @@ const Compare = () => {
         <Col>
         <Row> 
               <h1> {'     '}</h1>
-              <h5 className="text-center"> Displaying predictions for: {param} </h5> </Row>
-          <Row> 
+              <h5 className="text-center"> Displaying predictions for Lab T454 on 5/18/21: {param} </h5> </Row>
              <h1> {'     '}</h1>
-              <h5 className="text-center"> Lab {status + 1}: {otherinfo} </h5> </Row>
-          <Row>   <h5 className="text-center"> Lab {status2 + 1}: {otherinfo} </h5> </Row>
-          
+              {/*<h5 className="text-center"> Lab {status + 1}: {otherinfo} </h5> </Row>*/}
+          <Row>   
+            {/*<h5 className="text-center"> Lab {status2 + 1}: {otherinfo} </h5> </Row>*/}
+        </Row>
 
         </Col>
         </Row>
