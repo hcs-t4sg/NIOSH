@@ -25,7 +25,7 @@ import {
 } from "react-vis";
 import LabDataCompare from "../LabDataCompare/LabDataCompare";
 
-const Compare = () => {
+const Predict = () => {
   const parameters = ["Humidity", "Temperature"];
   const information = ["Windows", "Floor"];
   const [status, setStatus] = useState<string | null>(null);
@@ -152,4 +152,4 @@ const Compare = () => {
     </section>
   );
 };
-export default Compare;
+export default Predict;
