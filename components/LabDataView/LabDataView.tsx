@@ -42,6 +42,7 @@ const LabDataCompare: React.FC = (props) => {
   const labtempIndex = [b15_temp, room302_temp, b15_temp, room302_temp]
   const labhumIndex = [b15_hum, room302_hum, b15_hum, room302_hum]
   const labLabels = ["T454 Humidity", 'T454 Temperature']
+  const labels = [{title: 'T454 Hum', color: '#9c88ff'}, {title: 'T454 Temp', color: '#273c75'}]
   const t454_hum = []
   const t454_temp = []
   const h309_hum = []
@@ -76,18 +77,6 @@ const LabDataCompare: React.FC = (props) => {
   
   `;
 
-  const labQuery2 = `
-  query MyQuery {
-    observations(where: {time: {_gte: "2021-05-18", _lt: "2021-05-19"}, humidity: {_is_null: false}, lab: {_eq: "H309"}}) {
-      lab
-      temperature
-      humidity
-      time
-    }
-  }  
-  
-  `;
-
 
   const [{ data, fetching, error }, executeQuery] = useQuery({
     query: labQuery1
@@ -112,9 +101,9 @@ console.log(t454_hum);
       <Container
         style={{
           width: "80%",
-          borderStyle: "solid",
-          padding: "0.75rem",
-          marginTop: "0.75rem",
+          borderStyle: "none",
+          marginTop: "1.75rem",
+          padding: "1rem"
         }}
         width={1000}
         height={1000}
