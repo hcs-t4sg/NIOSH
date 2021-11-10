@@ -24,17 +24,16 @@ export type LabCategory = {
   temperature: number;
 };
 
-const LabDataCompare: React.FC = (props) => {
+const LabDataView: React.FC = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const labsData = [];
   
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   var [otherinfo, setOtherInfo] = useState<number>(0);
 
   {/* Load labs from Hasura, for now its hard coded*/}
-  const labsData = ["B-15", "302", "303", "446"];
+  
+  
   var b15_temp = [{x: 10, y: 11}, {x: 150, y: null}, {x: 300, y: null}, {x: 400, y: 37}, {x: 500, y: 47},{x: 1000, y: 71} ]
   const room302_temp = [{x: 8, y: null}, {x: 130, y: 20}, {x: 250, y: null}, {x: 450, y: 50}, {x: 490, y: 47},{x: 675, y: 80} ]
   const room302_hum = [{x: 18, y: 11}, {x: 110, y: 20}, {x: 210, y: 18}, {x: 410, y: 50}, {x: 510, y: 47},{x: 610, y: 80} ]
@@ -43,8 +42,8 @@ const LabDataCompare: React.FC = (props) => {
   const labhumIndex = [b15_hum, room302_hum, b15_hum, room302_hum]
   const labLabels = ["T454 Humidity", 'T454 Temperature']
   const labels = [{title: 'T454 Hum', color: '#9c88ff'}, {title: 'T454 Temp', color: '#273c75'}]
-  const t454_hum = []
-  const t454_temp = []
+  const t454_hum = [{x: 18, y: 11}, {x: 110, y: 20}]
+  const t454_temp = [{x: 38, y: 11}, {x: 160, y:150}]
   const h309_hum = []
   const h309_temp = []
   const parameters = ["Humidity","Temperature",];
@@ -56,9 +55,7 @@ const LabDataCompare: React.FC = (props) => {
 
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    otherinfo = 1;
     setAnchorEl(event.currentTarget);
-    
   };
 
   function handleClick2(num: number) {
@@ -77,24 +74,64 @@ const LabDataCompare: React.FC = (props) => {
   
   `;
 
+  const labQueryName = `
+  query queryLab {
+    observations(where: {humidity: {_is_null: false}}) {
+      lab
+      humidity
+      temperature
+      time
+    }
+  }
+  
+  `; 
+  
 
   const [{ data, fetching, error }, executeQuery] = useQuery({
-    query: labQuery1
+    query: labQueryName
   });
 
-  {/*if (data != null){
-    console.log(data.observations);
+  if (data != null){
+    console.log("data is not null");
+    
   } 
   else{
     console.log("failed")
-  }*/}
-let someArray = [1, "string", false];
-for (let entry of data.observations) {
-  var hour = Number(entry.time.split("T")[1].substring(0,2));
-  t454_hum.push({x: hour, y: entry.humidity});
-  t454_temp.push({x: hour, y: entry.temperature});
   }
-console.log(t454_hum);
+  let someArray = [1, "string", false];
+
+  
+
+
+  for (let entry of data.observations) {  
+    if (labsData.includes(entry.lab)) {
+    console.log("Done")
+    }
+    else{
+    labsData.push(entry.lab) 
+    }
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    const index = Math.floor((Math.random())*4)
+    var hour = 0
+    for (let entry of data.observations) {  
+      if (entry.lab == labsData[index]) {
+        t454_hum.push({x: hour, y: entry.humidity});
+        t454_temp.push({x: hour, y: entry.temperature});
+        hour += 1
+
+      }
+      else{
+        console.log("Data done")
+      }
+     
+    };
+    console.log(t454_hum) 
+    
+
+  };
 
   return (
     <>
@@ -110,17 +147,16 @@ console.log(t454_hum);
         
       >
 
-        <Button
+    <Button
             id="basic-button"
             aria-controls="basic-menu"
             variant= "contained"
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
-            onClick={() => handleClick2(1)}
+            onClick={handleClick}
           >
-            Lab Select
+            Labs
         </Button>
-        {/* Lab selection buttons*/}
         <Menu
             id="basic-menu"
             anchorEl={anchorEl}
@@ -129,21 +165,12 @@ console.log(t454_hum);
             MenuListProps={{
               'aria-labelledby': 'basic-button',
             }}
-
-            > 
-
-              {labsData.map((lab) => {
+        >
+            {/* Populate menu items with labs*/}
+            {labsData.map((lab) => {
                       return (
                         <MenuItem key={lab} onClick={handleClose}>{lab}</MenuItem>
                 )})} 
-
-            {/* Populate menu items with labs
-            {data ?? data.observations.map(((DataS: LabCategory) => {
-                  return (
-                    <MenuItem key={DataS.lab} value={DataS.temperature} onClick={handleClose}>{DataS.lab}</MenuItem>
-               )}))
-              } 
-              */}
         </Menu>
 
         <DatePicker
@@ -183,4 +210,4 @@ console.log(t454_hum);
     </>
   );
 };
-export default LabDataCompare;
+export default LabDataView;
