@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useQuery, useMutation } from "urql";
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, ChartLabel, VerticalGridLines, LineMarkSeries, LineSeries, DiscreteColorLegend} from 'react-vis';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, ChartLabel, VerticalGridLines, LineMarkSeries, LineSeries, DiscreteColorLegend, Highlight} from 'react-vis';
 import {
   Box,
   FormControl,
@@ -80,7 +80,7 @@ const LabDataCompare: React.FC = (props) => {
 
   const labQuery2 = `
   query MyQuery {
-    observations(where: {_or: [{time: {_gte: "2021-05-18", _lt: "2021-05-19"}, humidity: {_is_null: false}, lab: {_eq: "T454"}}, {time: {_gte: "2021-05-18", _lt: "2021-05-19"}, humidity: {_is_null: false}, lab: {_eq: "H309"}}]}) {
+    observations(where: {_or: [{time: {_gte: "2021-05-18", _lt: "2021-05-22"}, humidity: {_is_null: false}, lab: {_eq: "T454"}}, {time: {_gte: "2021-05-18", _lt: "2021-05-22"}, humidity: {_is_null: false}, lab: {_eq: "H309"}}]}) {
       temperature
       time
       humidity
@@ -95,29 +95,46 @@ const LabDataCompare: React.FC = (props) => {
     query: labQuery2
   });
 
+
+  if (fetching){
+    console.log("Fetching")
+  }
+  else {
+    let someArray = [1, "string", false];
+    for (let entry of data.observations) {
+      var hour = Number(entry.time.split("T")[1].substring(0,2));
+      var timestamp = new Date(entry.time).getTime();
+      const timestamp2 = new Date('September 10 2017').getTime();
+      console.log(timestamp)
+      console.log(timestamp2)
+      console.log(entry.time.split("T")[0]+" "+entry.time.split("T")[1])
+      var dt = entry.time.split("T")[0]+" "+entry.time.split("T")[1]
+      if (entry.lab == "H309")
+      {
+        h309_hum.push({x: timestamp, y: entry.humidity});
+        h309_temp.push({x: timestamp, y: entry.temperature});
+      }
+      if(entry.lab == "T454")
+      {
+        t454_hum.push({x: timestamp, y: entry.humidity});
+        t454_temp.push({x: timestamp, y: entry.temperature});
+      }
+      
+      }
+  
+  }
+  
   if (data != null){
     console.log(data.observations);
   } 
   else{
     console.log("failed")
   }
-let someArray = [1, "string", false];
-for (let entry of data.observations) {
-  var hour = Number(entry.time.split("T")[1].substring(0,2));
-  if (entry.lab == "H309")
-  {
-    h309_hum.push({x: hour, y: entry.humidity});
-    h309_temp.push({x: hour, y: entry.temperature});
-  }
-  if(entry.lab == "T454")
-  {
-    t454_hum.push({x: hour, y: entry.humidity});
-    t454_temp.push({x: hour, y: entry.temperature});
-  }
-  
-  }
+
 console.log(t454_hum);
 console.log(h309_hum);
+console.log("Start Date")
+console.log(startDate)
   return (
     <>
       <Container
@@ -227,6 +244,11 @@ console.log(h309_hum);
             data={h309_temp}
             opacity = {1}
           />
+          <Highlight
+            drag
+            enableX={false}
+            /* onDrag={area => (this as any).setState({filter: area})}*//>
+
         </XYPlot>
       </Container>
     </>

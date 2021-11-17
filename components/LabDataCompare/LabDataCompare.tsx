@@ -80,19 +80,27 @@ const LabDataCompare: React.FC = (props) => {
     query: labQuery
   });
 
+  if (fetching){
+    console.log("Fetching")
+  }
+  else {
+    let someArray = [1, "string", false];
+    for (let entry of data.observations) {
+      var hour = Number(entry.time.split("T")[1].substring(0,2));
+      t454_hum.push({x: hour, y: entry.humidity});
+      t454_temp.push({x: hour, y: entry.temperature});
+      }
+    console.log(t454_hum);
+  
+  }
+
   {/*if (data != null){
     console.log(data.observations);
   } 
   else{
     console.log("failed")
   }*/}
-let someArray = [1, "string", false];
-for (let entry of data.observations) {
-  var hour = Number(entry.time.split("T")[1].substring(0,2));
-  t454_hum.push({x: hour, y: entry.humidity});
-  t454_temp.push({x: hour, y: entry.temperature});
-  }
-console.log(t454_hum);
+
 
   return (
     <>

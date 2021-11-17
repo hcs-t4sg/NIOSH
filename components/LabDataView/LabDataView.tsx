@@ -76,7 +76,7 @@ const LabDataView: React.FC = (props) => {
 
   const labQueryName = `
   query queryLab {
-    observations {
+    observations(where: {humidity: {_is_null: false}}) {
       lab
       humidity
       temperature
@@ -101,34 +101,44 @@ const LabDataView: React.FC = (props) => {
   let someArray = [1, "string", false];
 
   
+  if (fetching){
+    console.log("Fetching")
+  }
+  else {
+    for (let entry of data.observations) {  
+      if (labsData.includes(entry.lab)) {
+      console.log("Done")
+      }
+      else{
+      labsData.push(entry.lab) 
+      }
+    };
+  
+  }
 
 
-  for (let entry of data.observations) {  
-    if (labsData.includes(entry.lab)) {
-    console.log("Done")
-    }
-    else{
-    labsData.push(entry.lab) 
-    }
-  };
-
+  
   const handleClose = () => {
     setAnchorEl(null);
     const index = Math.floor((Math.random())*4)
     var hour = 0
     for (let entry of data.observations) {  
       if (entry.lab == labsData[index]) {
+        var hour = new Date(entry.time).getTime();
+        if (hour > new Date(startDate).getTime() && hour < new Date(endDate).getTime()) {
         t454_hum.push({x: hour, y: entry.humidity});
         t454_temp.push({x: hour, y: entry.temperature});
-        hour += 1
 
-      }
+      }}
       else{
         console.log("Data done")
       }
      
     };
-    console.log(t454_hum) 
+    
+    console.log(t454_hum)
+    console.log("Start date get time is " + new Date(startDate).getTime())
+ 
     
 
   };
