@@ -139,6 +139,7 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
           {/* <DiscreteColorLegend items={labLabels} orientation={"horizontal"} /> */}
           {/* {console.log(prepareData(posts))} */}
           <LineMarkSeries
+            animation={true}
             curve={"curveMonotoneX"}
             data={prepareData(posts)}
             opacity={1}

@@ -182,9 +182,11 @@ const Predict = () => {
         <br />
 
         <Row>
-          <Button variant="contained" onClick={displayGraphFunct}>
-            Graph Predictions!
-          </Button>
+          <Col>
+            <Button variant="contained" onClick={displayGraphFunct}>
+              Graph Predictions!
+            </Button>
+          </Col>
         </Row>
       </Container>
 
