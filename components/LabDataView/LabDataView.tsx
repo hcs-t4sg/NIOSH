@@ -218,11 +218,11 @@ const LabDataView: React.FC = (props) => {
     /> 
 
         {/* Load lab data on graph, for now, hard-coded*/}
-        <XYPlot width={1000} height={500} margin={{left: 100, right: 10, top: 10, bottom:150}}>
+        <XYPlot width={1000} height={800} margin={{left: 100, right: 10, top: 10, bottom:300}}>
           <VerticalGridLines />
           <HorizontalGridLines />
           <YAxis title = "Temperature/Humidity (°F)"/>
-          <XAxis title = "Hour"  tickLabelAngle={-45} />
+          <XAxis title = "Hour" tickFormat={v => (new Date(v)).toString()} tickLabelAngle={-45} />
           <DiscreteColorLegend items={labels} orientation={"horizontal"}/>
           <LineMarkSeries 
             curve={'curveMonotoneX'}
