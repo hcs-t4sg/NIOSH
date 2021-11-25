@@ -39,8 +39,8 @@ const LabDataView: React.FC = (props) => {
   {/* Set up date picker*/}
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
-  const [lab_hum, set_labhum] = useState([{x: 18, y: 11}, {x: 110, y: 20}])
-  const [lab_temp, set_labtemp] = useState([{x: 18, y: 11}, {x: 110, y: 20}])
+  var [lab_hum, set_labhum] = useState([])
+  var [lab_temp, set_labtemp] = useState([])
 
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -142,14 +142,16 @@ const LabDataView: React.FC = (props) => {
     var hour = 0
     for (let entry of data.observations) {  
       if (entry.lab == myLab) {
-        console.log("this is working")
         var hour = new Date(entry.time).getTime();
-        if (hour > new Date(startDate).getTime() && hour < new Date(endDate).getTime()) {
+        if (hour > new Date(startDate).getTime()) {
+          if (hour < new Date(endDate).getTime()) {
           console.log("this is also working")
-        set_labhum(lab_hum.concat({x: hour, y: entry.humidity}));
-        set_labtemp(lab_temp.concat({x: hour, y: entry.temperature}));
-        t454_hum.push({x: hour, y: entry.humidity})
-      }}
+          lab_hum = lab_hum.concat({x: hour, y: entry.humidity})
+          set_labhum(lab_hum);
+          lab_temp = lab_temp.concat({x: hour, y: entry.temperature}) 
+          set_labtemp(lab_temp);
+          t454_hum.push({x: hour, y: entry.humidity})
+      }}}
       else{
         console.log("Data done")
       }
@@ -216,11 +218,11 @@ const LabDataView: React.FC = (props) => {
     /> 
 
         {/* Load lab data on graph, for now, hard-coded*/}
-        <XYPlot width={1000} height={500}>
+        <XYPlot width={1000} height={500} margin={{left: 100, right: 10, top: 10, bottom:150}}>
           <VerticalGridLines />
           <HorizontalGridLines />
-          <XAxis title = "Hour"/>
           <YAxis title = "Temperature/Humidity (°F)"/>
+          <XAxis title = "Hour"  tickLabelAngle={-45} />
           <DiscreteColorLegend items={labels} orientation={"horizontal"}/>
           <LineMarkSeries 
             curve={'curveMonotoneX'}
@@ -228,6 +230,7 @@ const LabDataView: React.FC = (props) => {
             style= {{fill: 'none'}}
             data={lab_hum}
             opacity = {1}
+             
           />
           <LineMarkSeries 
             curve={'curveMonotoneX'}
