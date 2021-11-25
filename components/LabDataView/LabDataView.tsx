@@ -110,8 +110,9 @@ const LabDataView: React.FC = (props) => {
       console.log("Done")
       }
       else{
-      labsData.push(entry.lab) 
-      }
+        labsData.push(entry.lab) 
+        } 
+     
     };
   
   }
@@ -137,7 +138,7 @@ const LabDataView: React.FC = (props) => {
     };
     
     console.log(t454_hum)
-    console.log("Start date get time is " + new Date(startDate).getTime())
+    console.log("Start date get time is " + startDate + new Date(startDate).getTime())
  
     
 
