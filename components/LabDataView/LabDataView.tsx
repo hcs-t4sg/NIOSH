@@ -29,29 +29,18 @@ const LabDataView: React.FC = (props) => {
   const open = Boolean(anchorEl);
   const labsData = [];
   
-  var [otherinfo, setOtherInfo] = useState<number>(0);
-
-  {/* Load labs from Hasura, for now its hard coded*/}
-  
-  
-  var b15_temp = [{x: 10, y: 11}, {x: 150, y: null}, {x: 300, y: null}, {x: 400, y: 37}, {x: 500, y: 47},{x: 1000, y: 71} ]
-  const room302_temp = [{x: 8, y: null}, {x: 130, y: 20}, {x: 250, y: null}, {x: 450, y: 50}, {x: 490, y: 47},{x: 675, y: 80} ]
-  const room302_hum = [{x: 18, y: 11}, {x: 110, y: 20}, {x: 210, y: 18}, {x: 410, y: 50}, {x: 510, y: 47},{x: 610, y: 80} ]
-  const b15_hum = [{x: 38, y: 11}, {x: 160, y:null}, {x: 280, y: null}, {x: 490, y: 50}, {x: 560, y: 47},{x: 620, y: 80} ]
-  const labtempIndex = [b15_temp, room302_temp, b15_temp, room302_temp]
-  const labhumIndex = [b15_hum, room302_hum, b15_hum, room302_hum]
-  const labLabels = ["T454 Humidity", 'T454 Temperature']
   const labels = [{title: 'T454 Hum', color: '#9c88ff'}, {title: 'T454 Temp', color: '#273c75'}]
   const t454_hum = [{x: 18, y: 11}, {x: 110, y: 20}]
   const t454_temp = [{x: 38, y: 11}, {x: 160, y:150}]
-  const h309_hum = []
-  const h309_temp = []
+  
   const parameters = ["Humidity","Temperature",];
   const [param, setParam] = useState<number | null>(0);
 
   {/* Set up date picker*/}
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
+  const [lab_hum, set_labhum] = useState([{x: 18, y: 11}, {x: 110, y: 20}])
+  const [lab_temp, set_labtemp] = useState([{x: 18, y: 11}, {x: 110, y: 20}])
 
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -91,6 +80,7 @@ const LabDataView: React.FC = (props) => {
     query: labQueryName
   });
 
+
   if (data != null){
     console.log("data is not null");
     
@@ -127,9 +117,8 @@ const LabDataView: React.FC = (props) => {
       if (entry.lab == labsData[index]) {
         var hour = new Date(entry.time).getTime();
         if (hour > new Date(startDate).getTime() && hour < new Date(endDate).getTime()) {
-        t454_hum.push({x: hour, y: entry.humidity});
-        t454_temp.push({x: hour, y: entry.temperature});
-
+        set_labhum(lab_hum.concat({x: hour, y: entry.humidity}));
+        set_labtemp(lab_temp.concat({x: hour, y: entry.temperature}));
       }}
       else{
         console.log("Data done")
@@ -143,6 +132,31 @@ const LabDataView: React.FC = (props) => {
     
 
   };
+
+  const handleMenuItem = event => {
+    const { myLab } = event.currentTarget.dataset
+    console.log(myLab)
+
+    var hour = 0
+    for (let entry of data.observations) {  
+      if (entry.lab == myLab) {
+        var hour = new Date(entry.time).getTime();
+        if (hour > new Date(startDate).getTime() && hour < new Date(endDate).getTime()) {
+        set_labhum(lab_hum.concat({x: hour, y: entry.humidity}));
+        set_labtemp(lab_temp.concat({x: hour, y: entry.temperature}));
+      }}
+      else{
+      }
+    };
+
+    
+    console.log("HUM DATA: " + lab_hum)
+    console.log("TEMP DATA: " + lab_temp)
+    console.log("Start date get time is " + startDate + new Date(startDate).getTime())
+ 
+    
+
+  }
 
   return (
     <>
@@ -180,7 +194,7 @@ const LabDataView: React.FC = (props) => {
             {/* Populate menu items with labs*/}
             {labsData.map((lab) => {
                       return (
-                        <MenuItem key={lab} onClick={handleClose}>{lab}</MenuItem>
+                        <MenuItem key={lab} data-my-lab={lab} onClick={handleMenuItem}>{lab}</MenuItem>
                 )})} 
         </Menu>
 
@@ -200,19 +214,19 @@ const LabDataView: React.FC = (props) => {
           <HorizontalGridLines />
           <XAxis title = "Hour"/>
           <YAxis title = "Temperature/Humidity (°F)"/>
-          <DiscreteColorLegend items={labLabels} orientation={"horizontal"}/>
+          <DiscreteColorLegend items={labels} orientation={"horizontal"}/>
           <LineMarkSeries 
             curve={'curveMonotoneX'}
             color={'#FF6978'}
             style= {{fill: 'none'}}
-            data={t454_hum}
+            data={lab_hum}
             opacity = {1}
           />
           <LineMarkSeries 
             curve={'curveMonotoneX'}
             color={'#352D39'}
             style= {{fill: 'none'}}
-            data={t454_temp}
+            data={lab_temp}
             opacity = {1}
           />
          
