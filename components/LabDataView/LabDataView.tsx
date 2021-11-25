@@ -119,6 +119,8 @@ const LabDataView: React.FC = (props) => {
         if (hour > new Date(startDate).getTime() && hour < new Date(endDate).getTime()) {
         set_labhum(lab_hum.concat({x: hour, y: entry.humidity}));
         set_labtemp(lab_temp.concat({x: hour, y: entry.temperature}));
+        t454_hum.push({x: hour, y: entry.humidity})
+
       }}
       else{
         console.log("Data done")
@@ -126,7 +128,7 @@ const LabDataView: React.FC = (props) => {
      
     };
     
-    console.log(t454_hum)
+    console.log("HUMIDITY IS:" + t454_hum)
     console.log("Start date get time is " + startDate + new Date(startDate).getTime())
  
     
@@ -140,18 +142,23 @@ const LabDataView: React.FC = (props) => {
     var hour = 0
     for (let entry of data.observations) {  
       if (entry.lab == myLab) {
+        console.log("this is working")
         var hour = new Date(entry.time).getTime();
         if (hour > new Date(startDate).getTime() && hour < new Date(endDate).getTime()) {
+          console.log("this is also working")
         set_labhum(lab_hum.concat({x: hour, y: entry.humidity}));
         set_labtemp(lab_temp.concat({x: hour, y: entry.temperature}));
+        t454_hum.push({x: hour, y: entry.humidity})
       }}
       else{
+        console.log("Data done")
       }
     };
 
     
-    console.log("HUM DATA: " + lab_hum)
-    console.log("TEMP DATA: " + lab_temp)
+    console.log(lab_hum)
+    console.log(lab_temp)
+    console.log(t454_hum)
     console.log("Start date get time is " + startDate + new Date(startDate).getTime())
  
     
