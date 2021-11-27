@@ -1,20 +1,7 @@
-<<<<<<< HEAD
 {/* Main page that displays lab data given a date and a specific HVAC lab*/}
 
-import * as React from 'react';
-import { Container } from "reactstrap";
-import DatePicker from "react-datepicker";
-import { useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { useQuery, useMutation } from "urql";
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, ChartLabel, VerticalGridLines, LineMarkSeries, LineSeries, DiscreteColorLegend, Highlight} from 'react-vis';
-=======
 import React, { useState } from "react";
 import { Container, Row, Col } from "reactstrap";
->>>>>>> 59bd64c88b7e3ca2d1020d53b27797d58716b59e
 import {
   Box,
   FormControl,
@@ -47,17 +34,13 @@ const Compare = () => {
   const [status2, setStatus2] = useState<string | null>(null);
   const [param, setParam] = useState<string | null>(null);
   const [otherinfo, setOtherInfo] = useState<string | null>(null);
->>>>>>> 59bd64c88b7e3ca2d1020d53b27797d58716b59e
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   
   const handleClose = () => {
     setAnchorEl(null);
   };
-  var [otherinfo, setOtherInfo] = useState<number>(0);
-  {
-    /* Load labs from Hasura, for now its hard coded*/
-  }
+  
   const labsData = [
     "B-15",
     "302",
@@ -167,4 +150,3 @@ const Compare = () => {
   );
 };
 export default Compare;
->>>>>>> 59bd64c88b7e3ca2d1020d53b27797d58716b59e
