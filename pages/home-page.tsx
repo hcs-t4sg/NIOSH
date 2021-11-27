@@ -18,18 +18,17 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import Link from 'next/link'
 
 const HomePage: React.FC = (props) => {
 
   return (
     <>
     <Container>
-           <LabDataView/> 
+           {/* <LabDataView/>  */}
 
       <Box m = {5}> 
-      <a href="/comparison-page" className="btn btn-primary btn-block">
-                Comparison Page <span className="ml-2 right-icon text-center">&#8594;</span>
-      </a>
+        Homepage
       </Box>  
    
 
