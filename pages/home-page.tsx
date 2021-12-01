@@ -25,7 +25,7 @@ const HomePage: React.FC = (props) => {
   return (
     <>
     <Container>
-           {/* <LabDataView/>  */}
+           <LabDataView/>
 
       <Box m = {5}> 
         Homepage
