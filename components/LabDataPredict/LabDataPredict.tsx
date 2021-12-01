@@ -38,8 +38,10 @@ interface IPost {
 interface PredProps {
   lab: string;
   parameter: string;
-  timestep1: number;
-  timestep2: number;
+  month1: number;
+  day1: number;
+  month2: number;
+  day2: number;
   setback: number;
   model: string;
 }
@@ -55,14 +57,18 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
     React.useState("");
 
   const url =
-    "https://pred-flask-app.herokuapp.com/predictmany/" +
+    "https://pred-flask-app.herokuapp.com/predictmany3/" +
     props.lab +
     "/" +
     props.parameter +
     "/" +
-    props.timestep1 +
+    props.month1 +
     "/" +
-    props.timestep2 +
+    props.day1 +
+    "/" +
+    props.month2 +
+    "/" +
+    props.day2 +
     "/" +
     props.setback +
     "/" +
@@ -96,8 +102,12 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
       const data = posts[0].result;
       var data_graph = [];
       for (let i = 0; i < data.length; i++) {
-        const time = i + parseInt(props.timestep1.toString());
-        const point = { x: time, y: data[i] };
+        // const time = i + parseInt(props.timestep1.toString());
+        const month_i = data[i][1].valueOf();
+        const day_i = data[i][2].valueOf();
+        const hour_i = data[i][3].valueOf();
+        const label = month_i + "/" + day_i + " | " + hour_i;
+        const point = { x: label, y: data[i][0] };
         data_graph.push(point);
       }
       return data_graph;
@@ -130,19 +140,39 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
   return (
     <div className="App">
       <ul className="posts">
-        <XYPlot width={800} height={500} margin={{ left: 100 }}>
+        <XYPlot
+          width={1200}
+          height={500}
+          margin={{ left: 100 }}
+          xType="ordinal"
+        >
           <VerticalGridLines />
           <HorizontalGridLines />
-          <XAxis title="Timestep (hour)" />
+          <XAxis
+            title="Timestep wrong"
+            tickFormat={(v) => v.substring(0, 4)}
+            tickSize={10}
+            tickLabelAngle={-45}
+            tickTotal={3}
+            style={{
+              text: {
+                stroke: "none",
+                fontSize: 10,
+                fontWeight: 400,
+              },
+            }}
+          />
           {/* <YAxis title="Temperature" /> */}
           <YAxis title="Humidity (%)" />
           {/* <DiscreteColorLegend items={labLabels} orientation={"horizontal"} /> */}
           {/* {console.log(prepareData(posts))} */}
           <LineMarkSeries
             animation={true}
-            curve={"curveMonotoneX"}
+            curve={"curveNatural"}
             data={prepareData(posts)}
             opacity={1}
+            size={0}
+            // color="black"
             style={{ fill: "none" }}
           />
         </XYPlot>

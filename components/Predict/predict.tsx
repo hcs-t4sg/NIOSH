@@ -29,14 +29,29 @@ const Predict = () => {
   const parameters = ["humidity", "temperature"];
   const [param, setParam] = useState<string | null>(null);
 
-  const labs = ["H353"];
+  const labs = [
+    "H309",
+    "H351",
+    "H353",
+    "H355",
+    "H424",
+    "H460",
+    "T303",
+    "T449",
+    "T464",
+    "TB01",
+    "TB15",
+  ];
+
   const [lab, setLab] = useState<string | null>(null);
 
   const models = ["svr_lin", "svr_rbf", "svr_poly"];
   const [model, setModel] = useState<string | null>(null);
 
-  const [timestep1, setTimestep1] = useState<number | null>();
-  const [timestep2, setTimestep2] = useState<number | null>();
+  const [month1, setMonth1] = useState<number | null>();
+  const [day1, setDay1] = useState<number | null>();
+  const [month2, setMonth2] = useState<number | null>();
+  const [day2, setDay2] = useState<number | null>();
 
   const setbacks = ["Yes", "No"];
   const [setback, setSetback] = useState<number | null>(null);
@@ -141,20 +156,40 @@ const Predict = () => {
             <FormControl fullWidth>
               <TextField
                 id="standard-basic"
-                label="Starting Timestep"
-                value={timestep1}
+                label="Starting Month"
+                value={month1}
                 onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                  setTimestep1(event.target.value as number);
+                  setMonth1(event.target.value as number);
                 }}
               ></TextField>
             </FormControl>
             <FormControl fullWidth>
               <TextField
                 id="standard-basic"
-                label="Ending Timestep"
-                value={timestep2}
+                label="Starting Day"
+                value={day1}
                 onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                  setTimestep2(event.target.value as number);
+                  setDay1(event.target.value as number);
+                }}
+              ></TextField>
+            </FormControl>
+            <FormControl fullWidth>
+              <TextField
+                id="standard-basic"
+                label="Ending Month"
+                value={month2}
+                onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+                  setMonth2(event.target.value as number);
+                }}
+              ></TextField>
+            </FormControl>
+            <FormControl fullWidth>
+              <TextField
+                id="standard-basic"
+                label="Ending Day"
+                value={day2}
+                onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+                  setDay2(event.target.value as number);
                 }}
               ></TextField>
             </FormControl>
@@ -197,16 +232,20 @@ const Predict = () => {
           <Col>
             {param != null &&
             lab != null &&
-            timestep1 != null &&
-            timestep2 != null &&
+            month1 != null &&
+            day1 != null &&
+            month2 != null &&
+            day2 != null &&
             setback != null &&
             model != null &&
             displayGraph == true ? (
               <LabDataPredict
                 lab={labs[lab]}
                 parameter={parameters[param]}
-                timestep1={timestep1}
-                timestep2={timestep2}
+                month1={month1}
+                day1={day1}
+                month2={month2}
+                day2={day2}
                 setback={setback}
                 model={models[model]}
               />
