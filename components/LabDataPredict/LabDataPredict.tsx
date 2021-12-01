@@ -15,6 +15,8 @@ import {
   XYPlot,
   XAxis,
   YAxis,
+  Hint,
+  Crosshair,
   HorizontalGridLines,
   ChartLabel,
   VerticalGridLines,
@@ -49,6 +51,7 @@ interface PredProps {
 const defaultPosts: IPost[] = [];
 
 const LabDataCompare: React.FC<PredProps> = (props) => {
+  const [tooltip, setTooltip] = useState([]);
   const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] =
     React.useState(defaultPosts);
   const [loading, setLoading]: [boolean, (loading: boolean) => void] =
@@ -114,6 +117,16 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
     }
   }
 
+  function getTimeString(hour: string) {
+    if (parseInt(hour) == 12) {
+      return "12PM";
+    } else if (parseInt(hour) > 12) {
+      return (parseInt(hour) % 12).toString() + "PM";
+    } else {
+      return parseInt(hour).toString() + "AM";
+    }
+  }
+
   // function getPredictions() {
   //   const lab = prompt("Please enter the lab:");
   //   const param = prompt("Please enter the parameter:");
@@ -140,16 +153,28 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
   return (
     <div className="App">
       <ul className="posts">
+        <>
+          {tooltip[0] != null ? (
+            <>
+              <h4>Mouse hovering at:</h4>
+              <p>
+                x = {tooltip[0]["x"].substring(0, 5)} |{" "}
+                {getTimeString(tooltip[0]["x"].substring(7, 10))}
+              </p>
+              <p>y = {tooltip[0]["y"].toString().substring(0, 4)} degrees F</p>
+            </>
+          ) : null}
+        </>
         <XYPlot
           width={1200}
           height={500}
-          margin={{ left: 100 }}
+          margin={{ left: 200, bottom: 50, top: 50 }}
           xType="ordinal"
         >
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis
-            title="Timestep wrong"
+            title="Date"
             tickFormat={(v) => v.substring(0, 4)}
             tickSize={10}
             tickLabelAngle={-45}
@@ -157,24 +182,26 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
             style={{
               text: {
                 stroke: "none",
-                fontSize: 10,
+                fontSize: 9,
                 fontWeight: 400,
               },
             }}
           />
           {/* <YAxis title="Temperature" /> */}
-          <YAxis title="Humidity (%)" />
+          <YAxis title="Temperature (deg F)" />
           {/* <DiscreteColorLegend items={labLabels} orientation={"horizontal"} /> */}
           {/* {console.log(prepareData(posts))} */}
           <LineMarkSeries
             animation={true}
             curve={"curveNatural"}
+            onNearestX={(d) => setTooltip([d])}
             data={prepareData(posts)}
             opacity={1}
             size={0}
-            // color="black"
             style={{ fill: "none" }}
           />
+          <Crosshair values={tooltip} />
+          {/* : [0] {x: '12/8 | 1', y: 70.14023252887971} */}
         </XYPlot>
       </ul>
       {error && <p className="error">{error}</p>}

@@ -9,6 +9,11 @@ import {
   Typography,
 } from "@material-ui/core";
 import DatePicker from "react-datepicker";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 import "react-datepicker/dist/react-datepicker.css";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -53,6 +58,26 @@ const Predict = () => {
   const [month2, setMonth2] = useState<number | null>();
   const [day2, setDay2] = useState<number | null>();
 
+  const [selectedDate1, setSelectedDate1] = useState<Date>(null);
+
+  const handleDateChange1 = (date: Date) => {
+    if (date != undefined) {
+      setSelectedDate1(date);
+      setMonth1(date.getMonth() + 1);
+      setDay1(date.getDate());
+    }
+  };
+
+  const [selectedDate2, setSelectedDate2] = useState(null);
+
+  const handleDateChange2 = (date: Date) => {
+    if (date != undefined) {
+      setSelectedDate2(date);
+      setMonth2(date.getMonth() + 1);
+      setDay2(date.getDate());
+    }
+  };
+
   const setbacks = ["Yes", "No"];
   const [setback, setSetback] = useState<number | null>(null);
 
@@ -84,6 +109,11 @@ const Predict = () => {
 
   function displayGraphFunct() {
     setDisplayGraph(true);
+  }
+
+  function setDateRange(dates) {
+    handleDateChange1(dates[0]);
+    handleDateChange2(dates[1]);
   }
 
   return (
@@ -152,8 +182,22 @@ const Predict = () => {
               </Select>
             </FormControl>
           </Col>
+
           <Col>
             <FormControl fullWidth>
+              <label>Start and end dates</label>
+              <DatePicker
+                minDate={new Date()}
+                selectsRange={true}
+                startDate={selectedDate1}
+                endDate={selectedDate2}
+                onChange={(update) => {
+                  setDateRange(update);
+                }}
+                // isClearable={true}
+              />
+            </FormControl>
+            {/* <FormControl fullWidth>
               <TextField
                 id="standard-basic"
                 label="Starting Month"
@@ -192,7 +236,7 @@ const Predict = () => {
                   setDay2(event.target.value as number);
                 }}
               ></TextField>
-            </FormControl>
+            </FormControl> */}
             <FormControl fullWidth>
               <InputLabel id="category-select-label">Setback?</InputLabel>
               <Select
