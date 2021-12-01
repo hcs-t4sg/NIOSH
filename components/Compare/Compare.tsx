@@ -1,3 +1,5 @@
+{/* Main page that displays lab data given a date and a specific HVAC lab*/}
+
 import React, { useState } from "react";
 import { Container, Row, Col } from "reactstrap";
 import {
@@ -34,16 +36,11 @@ const Compare = () => {
   const [otherinfo, setOtherInfo] = useState<string | null>(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  {
-    /* Load labs from Hasura, for now its hard coded*/
-  }
+  
   const labsData = [
     "B-15",
     "302",

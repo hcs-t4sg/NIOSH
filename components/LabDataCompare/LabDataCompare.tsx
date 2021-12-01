@@ -7,6 +7,7 @@ import { Container } from "reactstrap";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+import { useQuery } from 'urql';
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -25,18 +26,17 @@ import {
 const LabDataCompare: React.FC = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const [otherinfo, setOtherInfo] = useState<number | null>(0);
+  var [otherinfo, setOtherInfo] = useState<number>(0);
 
   {
     /* Load labs from Hasura, for now its hard coded*/
   }
   const labsData = ["B-15", "302", "303", "446"];
+
   const b15_temp = [
     { x: 10, y: 11 },
     { x: 150, y: 29 },
@@ -84,6 +84,58 @@ const LabDataCompare: React.FC = (props) => {
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
 
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    otherinfo = 1;
+    setAnchorEl(event.currentTarget);
+    
+  };
+
+  function handleClick2(num: number) {
+    console.log(num);
+  };
+
+  const labQuery = `
+  query MyQuery {
+    observations(where: {time: {_gte: "2021-05-18", _lt: "2021-05-19"}, humidity: {_is_null: false}, lab: {_eq: "T454"}}) {
+      lab
+      temperature
+      humidity
+      time
+    }
+  }  
+  
+  `;
+
+
+  const [{ data, fetching, error }, executeQuery] = useQuery({
+    query: labQuery
+  });
+
+  if (fetching){
+    console.log("Fetching")
+  }
+  else {
+    let someArray = [1, "string", false];
+    var t454_hum = [];
+    var t454_temp = [];
+    for (let entry of data.observations) {
+      var hour = Number(entry.time.split("T")[1].substring(0,2));
+      t454_hum.push({x: hour, y: entry.humidity});
+      t454_temp.push({x: hour, y: entry.temperature});
+      }
+    console.log(t454_hum);
+  
+  }
+
+  {/*if (data != null){
+    console.log(data.observations);
+  } 
+  else{
+    console.log("failed")
+  }*/}
+
+
   return (
     <>
       <Container
@@ -94,6 +146,7 @@ const LabDataCompare: React.FC = (props) => {
           marginTop: "0.75rem",
         }}
       >
+
         <Button
           id="basic-button"
           aria-controls="basic-menu"
