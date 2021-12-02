@@ -200,7 +200,7 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
             size={0}
             style={{ fill: "none" }}
           />
-          <Crosshair values={tooltip} />
+          {/* <Crosshair values={tooltip} /> */}
           {/* : [0] {x: '12/8 | 1', y: 70.14023252887971} */}
         </XYPlot>
       </ul>
