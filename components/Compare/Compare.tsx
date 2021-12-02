@@ -87,7 +87,6 @@ const LabDataCompare: React.FC = (props) => {
       lab
     }
   }  
-  
   `;
 
 
