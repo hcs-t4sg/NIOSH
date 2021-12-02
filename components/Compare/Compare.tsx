@@ -87,6 +87,7 @@ const LabDataCompare: React.FC = (props) => {
       lab
     }
   }  
+  
   `;
 
 
@@ -253,5 +254,4 @@ console.log(startDate)
     </>
   );
 };
-
 export default LabDataCompare;
