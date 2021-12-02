@@ -138,7 +138,8 @@ const LabDataView: React.FC = (props) => {
   const handleMenuItem = event => {
     const { myLab } = event.currentTarget.dataset
     console.log(myLab)
-
+    lab_hum = []
+    lab_temp = []
     var hour = 0
     for (let entry of data.observations) {  
       if (entry.lab == myLab) {
@@ -157,7 +158,7 @@ const LabDataView: React.FC = (props) => {
       }
     };
 
-    
+
     console.log(lab_hum)
     console.log(lab_temp)
     console.log(t454_hum)
@@ -224,24 +225,32 @@ const LabDataView: React.FC = (props) => {
           <YAxis title = "Temperature/Humidity (°F)"/>
           <XAxis title = "Hour" tickFormat={v => (new Date(v)).toString()} tickLabelAngle={-45} />
           <DiscreteColorLegend items={labels} orientation={"horizontal"}/>
-          <LineMarkSeries 
+          <LineSeries 
             curve={'curveMonotoneX'}
             color={'#FF6978'}
             style= {{fill: 'none'}}
+            strokeWidth = {4}
             data={lab_hum}
             opacity = {1}
              
           />
-          <LineMarkSeries 
+          <LineSeries 
             curve={'curveMonotoneX'}
             color={'#352D39'}
             style= {{fill: 'none'}}
+            strokeStyle = {'dashed'}
+            strokeWidth = {4}
             data={lab_temp}
             opacity = {1}
           />
          
         </XYPlot>
       </Container>
+      <Box m = {5}> 
+      <a href="/comparison-page" className="btn btn-primary btn-block">
+                Comparison Page <span className="ml-2 right-icon text-center">&#8594;</span>
+      </a>
+      </Box>  
     </>
   );
 };
