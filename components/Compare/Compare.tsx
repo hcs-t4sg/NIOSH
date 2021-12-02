@@ -254,4 +254,5 @@ console.log(startDate)
     </>
   );
 };
+
 export default LabDataCompare;
