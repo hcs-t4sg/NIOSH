@@ -54,7 +54,7 @@ const LabDataCompare: React.FC = (props) => {
 
   const labQueryName = `
   query queryLab {
-    observations() {
+    observations {
       lab
       humidity
       temperature
