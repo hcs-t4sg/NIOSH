@@ -1,7 +1,7 @@
 {/* Main page that displays lab data given a date and a specific HVAC lab*/}
 
 import * as React from 'react';
-import { Container } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
@@ -44,6 +44,11 @@ const LabDataCompare: React.FC = (props) => {
   var [lab_hum2, set_labhum2] = useState([])
   var [lab_temp2, set_labtemp2] = useState([])
 
+  const [lab1select, setLab1select] = useState<string | null>(null);
+  const [lab2select, setLab2select] = useState<string | null>(null);
+
+  const [displayGraph, setDisplayGraph] = useState<boolean>(false);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -51,6 +56,47 @@ const LabDataCompare: React.FC = (props) => {
   const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  function displayGraphFunct() {
+    generateGraph();
+    setDisplayGraph(true);
+  }
+
+  function generateGraph() {
+    var lab_hum_arr = []
+    var lab_temp_arr = []
+    var lab_hum2_arr = []
+    var lab_temp2_arr = []
+    var hour = 0
+  
+    for (let entry of data.observations) {
+      if (entry.lab == lab1select) {
+        console.log("thi")
+        var hour = new Date(entry.time).getTime();
+        if (hour > new Date(startDate).getTime()) {
+          if (hour < new Date(endDate).getTime()) {
+          lab_hum_arr.push({x: hour, y: entry.humidity});
+          lab_temp_arr = lab_temp_arr.concat({x: hour, y: entry.temperature}) 
+          } 
+        }
+      }  
+    if (entry.lab == lab2select) {
+      var hour = new Date(entry.time).getTime();
+      if (hour > new Date(startDate).getTime()) {
+        if (hour < new Date(endDate).getTime()) {
+        lab_hum2_arr = lab_hum2_arr.concat({x: hour, y: entry.humidity})
+        lab_temp2_arr = lab_temp2_arr.concat({x: hour, y: entry.temperature}) 
+        }
+      }
+    }
+  }
+  set_labhum(lab_hum_arr);
+  set_labtemp(lab_temp_arr);
+  set_labhum2(lab_hum2_arr);
+  set_labtemp2(lab_temp2_arr);
+  console.log(lab_hum_arr)
+};
+
 
   const labQueryName = `
   query queryLab {
@@ -102,76 +148,9 @@ const LabDataCompare: React.FC = (props) => {
     const index = Math.floor((Math.random())*4)
     var hour = 0
     
-    console.log("HUMIDITY IS:" + t454_hum)
-    console.log("Start date get time is " + startDate + new Date(startDate).getTime())
- 
-    
 
   };
 
-  const handleMenuItem = event => {
-    const { myLab } = event.currentTarget.dataset
-    console.log(myLab)
-    lab_hum = []
-    lab_temp = []
-    var hour = 0
-    for (let entry of data.observations) {  
-      if (entry.lab == myLab) {
-        var hour = new Date(entry.time).getTime();
-        if (hour > new Date(startDate).getTime()) {
-          if (hour < new Date(endDate).getTime()) {
-          console.log("this is also working")
-          lab_hum = lab_hum.concat({x: hour, y: entry.humidity})
-          set_labhum(lab_hum);
-          lab_temp = lab_temp.concat({x: hour, y: entry.temperature}) 
-          set_labtemp(lab_temp);
-          t454_hum.push({x: hour, y: entry.humidity})
-      }}}
-      else{
-        console.log("Data done")
-      }
-    };
-
-
-    console.log(lab_hum)
-    console.log(lab_temp)
-    console.log(t454_hum)
-    console.log("Start date get time is " + startDate + new Date(startDate).getTime())
- 
-    
-
-  }
-  const handleMenuItem2 = event => {
-    const { myLab } = event.currentTarget.dataset
-    console.log(myLab)
-    lab_hum2 = []
-    lab_temp2 = []
-    var hour = 0
-    for (let entry of data.observations) {  
-      if (entry.lab == myLab) {
-        var hour = new Date(entry.time).getTime();
-        if (hour > new Date(startDate).getTime()) {
-          if (hour < new Date(endDate).getTime()) {
-          console.log("this is also working")
-          lab_hum2 = lab_hum2.concat({x: hour, y: entry.humidity})
-          set_labhum2(lab_hum2);
-          lab_temp2 = lab_temp2.concat({x: hour, y: entry.temperature}) 
-          set_labtemp2(lab_temp2);
-      }}}
-      else{
-        console.log("Data done")
-      }
-    };
-
-
-    console.log(lab_hum)
-    console.log(lab_temp)
-    console.log(t454_hum)
-    console.log("Start date get time is " + startDate + new Date(startDate).getTime())
- 
-    
-
-  }
 
   return (
     <>
@@ -187,7 +166,7 @@ const LabDataCompare: React.FC = (props) => {
         
       >
 
-    <Button
+    {/* <Button
             id="basic-button"
             aria-controls="basic-menu"
             variant= "contained"
@@ -205,9 +184,8 @@ const LabDataCompare: React.FC = (props) => {
             MenuListProps={{
               'aria-labelledby': 'basic-button',
             }}
-        >
-            {/* Populate menu items with labs*/}
-            {labsData.map((lab) => {
+        >            
+        {labsData.map((lab) => {
                       return (
                         <MenuItem key={lab} data-my-lab={lab} onClick={handleMenuItem}>{lab}</MenuItem>
                 )})} 
@@ -218,7 +196,7 @@ const LabDataCompare: React.FC = (props) => {
             variant= "contained"
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
+            onClick={handleClick2}
           >
             Lab 2
         </Button>
@@ -230,68 +208,138 @@ const LabDataCompare: React.FC = (props) => {
             MenuListProps={{
               'aria-labelledby': 'basic-button',
             }}
-        >
+        > */}
             {/* Populate menu items with labs*/}
-            {labsData.map((lab) => {
+            {/* {labsData.map((lab) => {
                       return (
                         <MenuItem key={lab} data-my-lab={lab} onClick={handleMenuItem2}>{lab}</MenuItem>
                 )})} 
-        </Menu>
-        <DatePicker
-      selectsRange={true}
-      startDate={startDate}
-      endDate={endDate}
-      onChange={(update) => {
-        setDateRange(update);
-      }}
-      isClearable={true}
-    /> 
-
-        {/* Load lab data on graph, for now, hard-coded*/}
-        <XYPlot width={1000} height={800} margin={{left: 100, right: 10, top: 10, bottom:300}}>
-          <VerticalGridLines />
-          <HorizontalGridLines />
-          <YAxis title = "Temperature/Humidity (°F)"/>
-          <XAxis title = "Hour" tickFormat={v => (new Date(v)).toString()} tickLabelAngle={-45} />
-          <DiscreteColorLegend items={labels} orientation={"horizontal"}/>
-          <LineMarkSeries 
-            curve={'curveMonotoneX'}
-            color={'#FF6978'}
-            style= {{fill: 'none'}}
-            data={lab_hum}
-            opacity = {1}
-             
-          />
-          <LineMarkSeries 
-            curve={'curveMonotoneX'}
-            color={'#352D39'}
-            style= {{fill: 'none'}}
-            data={lab_temp}
-            opacity = {1}
-          />
-        </XYPlot>
-        <XYPlot width={1000} height={800} margin={{left: 100, right: 10, top: 10, bottom:300}}>
-          <VerticalGridLines />
-          <HorizontalGridLines />
-          <YAxis title = "Temperature/Humidity (°F)"/>
-          <XAxis title = "Hour" tickFormat={v => (new Date(v)).toString()} tickLabelAngle={-45} />
-          <DiscreteColorLegend items={labels} orientation={"horizontal"}/>
-          <LineMarkSeries 
-            curve={'curveMonotoneX'}
-            color={'#FF6978'}
-            style= {{fill: 'none'}}
-            data={lab_hum2}
-            opacity = {1}
-             
-          />
-          <LineMarkSeries 
-            curve={'curveMonotoneX'}
-            color={'#352D39'}
-            style= {{fill: 'none'}}
-            data={lab_temp2}
-            opacity = {1}
-          />
-        </XYPlot>
+        </Menu> */}
+        <Row>
+          <Col>
+            <FormControl fullWidth>
+                  <InputLabel id="category-select-label">Select First Lab</InputLabel>
+                  <Select
+                    labelId="category-select-label"
+                    value={lab1select}
+                    onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+                      setLab1select(event.target.value as string);
+                    }}
+                  >
+                    {labsData.map((lab, index) => {
+                      return (
+                        <MenuItem key={index} value={index}>
+                          {" "}
+                          {lab}{" "}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+              </FormControl>
+          </Col>
+          <Col>
+            <FormControl fullWidth>
+                  <InputLabel id="category-select-label">Select Second Lab</InputLabel>
+                  <Select
+                    labelId="category-select-label"
+                    value={lab2select}
+                    onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+                      setLab2select(event.target.value as string);
+                    }}
+                  >
+                    {labsData.map((lab, index) => {
+                      return (
+                        <MenuItem key={index} value={index}>
+                          {" "}
+                          {lab}{" "}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+              </FormControl>
+          </Col>
+          <Col>
+          <FormControl fullWidth>
+          <label>Start and end dates</label>
+            <DatePicker
+              selectsRange={true}
+              startDate={startDate}
+              endDate={endDate}
+              onChange={(update) => {
+                setDateRange(update);
+              }}
+              isClearable={true}
+            /> 
+            </FormControl>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Button variant="contained" onClick={displayGraphFunct}>
+              Generate comparison
+            </Button>
+          </Col>
+        </Row>
+      
+      
+        <Row>
+          <Col>
+          {/* {lab_hum != null &&
+            lab_temp != null &&
+            lab_hum2 != null &&
+            lab_temp2 != null && */}
+            {displayGraph == true ? (
+            <>
+            {console.log("dispay")}
+            {console.log(lab_temp)}
+            <XYPlot width={1000} height={800} margin={{left: 100, right: 10, top: 10, bottom:300}}>
+              <VerticalGridLines />
+              <HorizontalGridLines />
+              <YAxis title = "Temperature/Humidity (°F)"/>
+              <XAxis title = "Hour" tickFormat={v => (new Date(v)).toString()} tickLabelAngle={-45} />
+              <DiscreteColorLegend items={labels} orientation={"horizontal"}/>
+              <LineMarkSeries 
+                curve={'curveMonotoneX'}
+                color={'#FF6978'}
+                style= {{fill: 'none'}}
+                data={lab_hum}
+                opacity = {1}
+                
+              />
+              <LineMarkSeries 
+                curve={'curveMonotoneX'}
+                color={'#352D39'}
+                style= {{fill: 'none'}}
+                data={lab_temp}
+                opacity = {1}
+              />
+            </XYPlot>
+            <XYPlot width={1000} height={800} margin={{left: 100, right: 10, top: 10, bottom:300}}>
+              <VerticalGridLines />
+              <HorizontalGridLines />
+              <YAxis title = "Temperature/Humidity (°F)"/>
+              <XAxis title = "Hour" tickFormat={v => (new Date(v)).toString()} tickLabelAngle={-45} />
+              <DiscreteColorLegend items={labels} orientation={"horizontal"}/>
+              <LineMarkSeries 
+                curve={'curveMonotoneX'}
+                color={'#FF6978'}
+                style= {{fill: 'none'}}
+                data={lab_hum2}
+                opacity = {1}
+                
+              />
+              <LineMarkSeries 
+                curve={'curveMonotoneX'}
+                color={'#352D39'}
+                style= {{fill: 'none'}}
+                data={lab_temp2}
+                opacity = {1}
+              />
+            </XYPlot>
+        </>
+            ) : null}
+        </Col>
+        </Row>
       </Container>
     </>
   );

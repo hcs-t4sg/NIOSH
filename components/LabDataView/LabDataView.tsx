@@ -65,7 +65,7 @@ const LabDataView: React.FC = (props) => {
 
   const labQueryName = `
   query queryLab {
-    observations(where: {humidity: {_is_null: false}}) {
+    observations {
       lab
       humidity
       temperature
