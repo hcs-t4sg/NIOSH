@@ -31,8 +31,7 @@ import {
 import LabDataPredict from "../LabDataPredict/LabDataPredict";
 
 const Predict = () => {
-  // const parameters = ["humidity", "temperature"];
-  const parameters = ["temperature"];
+  const parameters = ["humidity", "temperature"];
   const [param, setParam] = useState<string | null>(null);
 
   const labs = [
@@ -51,12 +50,7 @@ const Predict = () => {
 
   const [lab, setLab] = useState<string | null>(null);
 
-  const models_names = ["svr_lin", "svr_rbf", "svr_poly"];
-  const models = [
-    "Support vector regression: linear",
-    "Support vector regression: radial basis function",
-    "Support vector regression: polynomial",
-  ];
+  const models = ["svr_lin", "svr_rbf", "svr_poly"];
   const [model, setModel] = useState<string | null>(null);
 
   const [month1, setMonth1] = useState<number | null>();
@@ -297,7 +291,7 @@ const Predict = () => {
                 month2={month2}
                 day2={day2}
                 setback={setback}
-                model={models_names[model]}
+                model={models[model]}
               />
             ) : null}
           </Col>

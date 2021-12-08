@@ -31,8 +31,7 @@ import {
 import LabDataPredict from "../LabDataPredict/LabDataPredict";
 
 const Predict = () => {
-  // const parameters = ["humidity", "temperature"];
-  const parameters = ["temperature"];
+  const parameters = ["humidity", "temperature"];
   const [param, setParam] = useState<string | null>(null);
 
   const labs = [
@@ -44,19 +43,14 @@ const Predict = () => {
     "H460",
     "T303",
     "T449",
-    "T454",
+    "T464",
     "TB01",
     "TB15",
   ];
 
   const [lab, setLab] = useState<string | null>(null);
 
-  const models_names = ["svr_lin", "svr_rbf", "svr_poly"];
-  const models = [
-    "Support vector regression: linear",
-    "Support vector regression: radial basis function",
-    "Support vector regression: polynomial",
-  ];
+  const models = ["svr_lin", "svr_rbf", "svr_poly"];
   const [model, setModel] = useState<string | null>(null);
 
   const [month1, setMonth1] = useState<number | null>();
@@ -64,24 +58,20 @@ const Predict = () => {
   const [month2, setMonth2] = useState<number | null>();
   const [day2, setDay2] = useState<number | null>();
 
-  const [selectedDate1, setSelectedDate1] = useState<Date>(null);
+  const [selectedDate1, setSelectedDate1] = useState(new Date());
 
   const handleDateChange1 = (date: Date) => {
-    if (date != undefined) {
-      setSelectedDate1(date);
-      setMonth1(date.getMonth() + 1);
-      setDay1(date.getDate());
-    }
+    setSelectedDate1(date);
+    setMonth1(date.getMonth() + 1);
+    setDay1(date.getDate());
   };
 
-  const [selectedDate2, setSelectedDate2] = useState(null);
+  const [selectedDate2, setSelectedDate2] = useState(new Date());
 
   const handleDateChange2 = (date: Date) => {
-    if (date != undefined) {
-      setSelectedDate2(date);
-      setMonth2(date.getMonth() + 1);
-      setDay2(date.getDate());
-    }
+    setSelectedDate2(date);
+    setMonth2(date.getMonth() + 1);
+    setDay2(date.getDate());
   };
 
   const setbacks = ["Yes", "No"];
@@ -115,11 +105,6 @@ const Predict = () => {
 
   function displayGraphFunct() {
     setDisplayGraph(true);
-  }
-
-  function setDateRange(dates) {
-    handleDateChange1(dates[0]);
-    handleDateChange2(dates[1]);
   }
 
   return (
@@ -188,20 +173,40 @@ const Predict = () => {
               </Select>
             </FormControl>
           </Col>
-
           <Col>
             <FormControl fullWidth>
-              <label>Start and end dates</label>
-              <DatePicker
-                minDate={new Date()}
-                selectsRange={true}
-                startDate={selectedDate1}
-                endDate={selectedDate2}
-                onChange={(update) => {
-                  setDateRange(update);
-                }}
-                // isClearable={true}
-              />
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  id="date-picker-inline"
+                  label="Starting Date"
+                  value={selectedDate1}
+                  onChange={handleDateChange1}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />
+              </MuiPickersUtilsProvider>
+            </FormControl>
+            <FormControl fullWidth>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  id="date-picker-inline"
+                  label="Ending Date"
+                  value={selectedDate2}
+                  onChange={handleDateChange2}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />
+              </MuiPickersUtilsProvider>
             </FormControl>
             {/* <FormControl fullWidth>
               <TextField
@@ -241,8 +246,8 @@ const Predict = () => {
                 onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
                   setDay2(event.target.value as number);
                 }}
-              ></TextField>
-            </FormControl> */}
+              ></TextField> 
+            </FormControl>*/}
             <FormControl fullWidth>
               <InputLabel id="category-select-label">Setback?</InputLabel>
               <Select
@@ -297,7 +302,7 @@ const Predict = () => {
                 month2={month2}
                 day2={day2}
                 setback={setback}
-                model={models_names[model]}
+                model={models[model]}
               />
             ) : null}
           </Col>

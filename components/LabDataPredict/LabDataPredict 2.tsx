@@ -127,6 +127,29 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
     }
   }
 
+  // function getPredictions() {
+  //   const lab = prompt("Please enter the lab:");
+  //   const param = prompt("Please enter the parameter:");
+  //   const timestep1 = prompt("Please enter the timestep1:");
+  //   const timestep2 = prompt("Please enter the timestep2:");
+  //   const setback = prompt("Please enter the setback:");
+  //   const model = prompt("Please enter the model:");
+  //   fetch(
+  //     `https://pred-flask-app.herokuapp.com/predictmany/${lab}/${param}/${timestep1}/${timestep2}/${setback}/${model}`,
+  //     {
+  //       method: "GET",
+  //     }
+  //   )
+  //     .then((response) => {
+  //       return response.text();
+  //     })
+  //     .then((data) => {
+  //       return data[0];
+  //     });
+  // }
+
+  // console.log(getPredictions());
+
   return (
     <div className="App">
       <ul className="posts">
@@ -147,7 +170,6 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
           height={500}
           margin={{ left: 200, bottom: 50, top: 50 }}
           xType="ordinal"
-          yDomain={[50, 100]}
         >
           <VerticalGridLines />
           <HorizontalGridLines />
@@ -171,14 +193,11 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
           {/* {console.log(prepareData(posts))} */}
           <LineMarkSeries
             animation={true}
-            curve={"curveMonotoneX"}
+            curve={"curveNatural"}
             onNearestX={(d) => setTooltip([d])}
             data={prepareData(posts)}
-            color={"#FF6978"}
-            size={2}
-            strokeWidth={3}
-            strokeStyle={"dashed"}
             opacity={1}
+            size={0}
             style={{ fill: "none" }}
           />
           {/* <Crosshair values={tooltip} /> */}
