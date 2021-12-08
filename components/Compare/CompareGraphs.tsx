@@ -9,6 +9,7 @@ import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
+import Loader from "react-loader-spinner";
 import MenuItem from "@mui/material/MenuItem";
 import { useQuery, useMutation } from "urql";
 import {
@@ -108,28 +109,8 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
         }
       }
     }
-    // set_labhum1(lab1_hum_arr);
-    // set_labtemp1(lab1_temp_arr);
-    // set_labhum2(lab2_hum_arr);
-    // set_labtemp2(lab2_temp_arr);
-    // console.log(lab1_hum_arr);
-    console.log(lab1_temp_arr);
     return [lab1_temp_arr, lab1_hum_arr, lab2_temp_arr, lab2_hum_arr];
   }
-
-  // const labQuery1 =
-  //   `
-  // query queryLab {
-  //   observations(where: {lab: {_eq: "` +
-  //   props.lab1 +
-  //   `"}}) {
-  //     humidity
-  //     lab
-  //     temperature
-  //     time
-  //   }
-  // }
-  // `;
 
   const labQueryName = `
   query queryLab {
@@ -155,9 +136,6 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
     }
   }
   `;
-
-  const lab1 = "H353";
-  const lab2 = "H355";
 
   console.log([props.lab1, props.lab2]);
 
@@ -199,7 +177,18 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
       }
     }
   }
-  if (fetching) return "Loading data";
+  if (fetching)
+    return (
+      <center>
+        <Loader
+          type="Puff"
+          color="#4ce4a9"
+          height={50}
+          width={50}
+          timeout={4000} //3 secs
+        />
+      </center>
+    );
 
   console.log(data);
 
@@ -214,8 +203,6 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
     data_graph_lab1_hum = data_graph_lab[1];
     data_graph_lab2_temp = data_graph_lab[2];
     data_graph_lab2_hum = data_graph_lab[3];
-    console.log(data_graph_lab1_hum);
-    console.log(data_graph_lab2_hum);
   }
 
   const labLabelsTemp = ["First Lab Temperature", "Second Lab Temperature"];
@@ -232,13 +219,13 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
             <Col>
               {tooltip1[0] != null ? (
                 <>
-                  <h5>Mouse hover for First Lab (red)</h5>
+                  <h5>Mouse hover for Lab {props.lab1} (red)</h5>
                   <p>
                     x: {new Date(tooltip1[0]["x"]).toString().substring(0, 33)}
                   </p>
                   <>
                     {tooltip1[0]["y"] != null ? (
-                      <p>y: {tooltip1[0]["y"]} degrees F/%</p>
+                      <p>y: {tooltip1[0]["y"]} degrees F</p>
                     ) : (
                       <p> There is no data for the hovered date/time. </p>
                     )}
@@ -249,13 +236,13 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
             <Col>
               {tooltip2[0] != null ? (
                 <>
-                  <h5>Mouse hover for Second Lab (black)</h5>
+                  <h5>Mouse hover for Lab {props.lab2} (black)</h5>
                   <p>
                     x: {new Date(tooltip2[0]["x"]).toString().substring(0, 33)}
                   </p>
                   <>
                     {tooltip2[0]["y"] != null ? (
-                      <p>y: {tooltip2[0]["y"]} degrees F/%</p>
+                      <p>y: {tooltip2[0]["y"]} degrees F</p>
                     ) : (
                       <p> There is no data for the hovered date/time. </p>
                     )}
@@ -306,13 +293,13 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
             <Col>
               {tooltip3[0] != null ? (
                 <>
-                  <h5>Mouse hover for First Lab (red)</h5>
+                  <h5>Mouse hover for Lab {props.lab1} (red)</h5>
                   <p>
                     x: {new Date(tooltip3[0]["x"]).toString().substring(0, 33)}
                   </p>
                   <>
                     {tooltip3[0]["y"] != null ? (
-                      <p>y: {tooltip3[0]["y"]} degrees F/%</p>
+                      <p>y: {tooltip3[0]["y"]}%</p>
                     ) : (
                       <p> There is no data for the hovered date/time. </p>
                     )}
@@ -323,13 +310,13 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
             <Col>
               {tooltip4[0] != null ? (
                 <>
-                  <h5>Mouse hover for Second Lab (black)</h5>
+                  <h5>Mouse hover for Lab {props.lab2} (black)</h5>
                   <p>
                     x: {new Date(tooltip4[0]["x"]).toString().substring(0, 33)}
                   </p>
                   <>
                     {tooltip4[0]["y"] != null ? (
-                      <p>y: {tooltip4[0]["y"]} degrees F/%</p>
+                      <p>y: {tooltip4[0]["y"]}%</p>
                     ) : (
                       <p> There is no data for the hovered date/time. </p>
                     )}
