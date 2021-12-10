@@ -1,0 +1,34 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-niosh-dev-114941-authRole",
+      "UnauthRoleArn": "arn:aws:iam::037661716757:role/amplify-niosh-dev-114941-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::037661716757:role/amplify-niosh-dev-114941-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-niosh-dev-114941-deployment",
+      "UnauthRoleName": "amplify-niosh-dev-114941-unauthRole",
+      "StackName": "amplify-niosh-dev-114941",
+      "StackId": "arn:aws:cloudformation:us-east-1:037661716757:stack/amplify-niosh-dev-114941/8565cda0-51fd-11ec-90c9-126ca9773a3f",
+      "AmplifyAppId": "dux3ibhujigeq",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-niosh-dev-114941-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dux3ibhujigeq",
+          "type": "manual"
+        }
+      },
+      "auth": {
+        "niosh1fa4a013": {}
+      },
+      "function": {
+        "niosh1fa4a013PreSignup": {
+          "DOMAINALLOWLIST": "'college.harvard.edu, cdc.gov'",
+          "deploymentBucketName": "amplify-niosh-dev-114941-deployment",
+          "s3Key": "amplify-builds/niosh1fa4a013PreSignup-417354526c67426b3572-build.zip"
+        }
+      }
+    }
+  }
+}
