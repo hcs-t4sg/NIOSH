@@ -25,14 +25,6 @@ const HomePage: React.FC = (props) => {
     <>
     <Container>
            <LabDataView/> 
-
-      <Box m = {5}> 
-      <a href="/comparison-page" className="btn btn-primary btn-block">
-                Comparison Page <span className="ml-2 right-icon text-center">&#8594;</span>
-      </a>
-      </Box>  
-   
-
     </Container>
     </>
   );
