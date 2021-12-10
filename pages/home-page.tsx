@@ -18,20 +18,13 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import Link from 'next/link'
 
 const HomePage: React.FC = (props) => {
 
   return (
     <>
     <Container>
-           {/* <LabDataView/>  */}
-
-      <Box m = {5}> 
-        Homepage
-      </Box>  
-   
-
+           <LabDataView/> 
     </Container>
     </>
   );
