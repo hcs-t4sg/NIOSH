@@ -1,0 +1,110 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-niosh-dev-114941-authRole",
+      "UnauthRoleArn": "arn:aws:iam::037661716757:role/amplify-niosh-dev-114941-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::037661716757:role/amplify-niosh-dev-114941-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-niosh-dev-114941-deployment",
+      "UnauthRoleName": "amplify-niosh-dev-114941-unauthRole",
+      "StackName": "amplify-niosh-dev-114941",
+      "StackId": "arn:aws:cloudformation:us-east-1:037661716757:stack/amplify-niosh-dev-114941/8565cda0-51fd-11ec-90c9-126ca9773a3f",
+      "AmplifyAppId": "dux3ibhujigeq",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-niosh-dev-114941-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    }
+  },
+  "auth": {
+    "niosh1fa4a013": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "niosh1fa4a013PreSignup",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-niosh-dev-114941-deployment/amplify-cfn-templates/auth/niosh1fa4a013-cloudformation-template.json",
+        "logicalId": "authniosh1fa4a013"
+      },
+      "lastPushTimeStamp": "2021-12-10T02:45:40.423Z",
+      "output": {
+        "UserPoolId": "us-east-1_yMIYVTRv6",
+        "AppClientIDWeb": "2ecf36v3kksj3c08d1ucat6c84",
+        "AppClientID": "5bv1sdepe7muud03p1h8u8manh",
+        "IdentityPoolId": "us-east-1:77656cf4-6a06-421a-b235-fba1134090c5",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:037661716757:userpool/us-east-1_yMIYVTRv6",
+        "IdentityPoolName": "niosh1fa4a013_identitypool_1fa4a013__dev",
+        "UserPoolName": "niosh1fa4a013_userpool_1fa4a013",
+        "HostedUIDomain": "college-dev",
+        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}"
+      },
+      "lastPushDirHash": "NxzlmTtWGSTtUe9AWdJEvLWQcUc="
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "service": "amplifyhosting",
+      "providerPlugin": "awscloudformation",
+      "type": "manual",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-niosh-dev-114941-deployment/amplify-cfn-templates/hosting/amplifyhosting-template.json",
+        "logicalId": "hostingamplifyhosting"
+      },
+      "lastPushTimeStamp": "2021-12-10T02:45:40.425Z",
+      "output": {},
+      "lastPushDirHash": "zpUTPsyPH5BygysO9h9S+u5VdHQ="
+    }
+  },
+  "function": {
+    "niosh1fa4a013PreSignup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2021-12-10T02:44:37.735Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2021-12-10T02:44:37.838Z",
+      "distZipFilename": "niosh1fa4a013PreSignup-417354526c67426b3572-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-niosh-dev-114941-deployment",
+        "s3Key": "amplify-builds/niosh1fa4a013PreSignup-417354526c67426b3572-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-niosh-dev-114941-deployment/amplify-cfn-templates/function/niosh1fa4a013PreSignup-cloudformation-template.json",
+        "logicalId": "functionniosh1fa4a013PreSignup"
+      },
+      "lastPushTimeStamp": "2021-12-10T02:45:40.437Z",
+      "output": {
+        "Region": "us-east-1",
+        "Arn": "arn:aws:lambda:us-east-1:037661716757:function:niosh1fa4a013PreSignup-dev",
+        "Name": "niosh1fa4a013PreSignup-dev",
+        "LambdaExecutionRole": "niosh1fa4a013PreSignup-dev"
+      },
+      "lastPushDirHash": "ZGbHb1lcooJDrmieYIuXqvCLxa0="
+    }
+  }
+}

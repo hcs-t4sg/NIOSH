@@ -1,4 +1,4 @@
 node_modules
-.next/
+.next/*
 secrets.js
 .DS_Store
