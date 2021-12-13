@@ -24,7 +24,7 @@ const HomePage: React.FC = (props) => {
   return (
     <>
     <Container>
-           <LabDataView/> 
+      <LabDataView/> 
     </Container>
     </>
   );

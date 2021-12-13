@@ -94,18 +94,18 @@ const LabDataView: React.FC = (props) => {
   if (fetching){
     console.log("Fetching")
   }
-  else {
-    for (let entry of data.observations) {  
-      if (labsData.includes(entry.lab)) {
-      console.log("Done")
-      }
-      else{
-        labsData.push(entry.lab) 
-        } 
+  // else {
+  //   for (let entry of data.observations) {  
+  //     if (labsData.includes(entry.lab)) {
+  //     console.log("Done")
+  //     }
+  //     else{
+  //       labsData.push(entry.lab) 
+  //       } 
      
-    };
+  //   };
   
-  }
+  //}
 
 
   

@@ -10,10 +10,17 @@
     "test": "jest"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "@aws-amplify/auth": "^4.3.16",
+    "@aws-amplify/ui-react": "^1.2.26",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@material-ui/core": "^4.12.3",
     "@mui/material": "^5.0.3",
+    "@react-navigation/stack": "^6.0.11",
+    "@types/styled-components": "^5.1.15",
+    "antd": "^4.17.2",
+    "aws-amplify": "^4.3.8",
     "axios": "^0.24.0",
     "bootstrap": "^5.0.2",
     "graphql": "^15.5.1",
@@ -27,23 +34,29 @@
     "react-timeseries-charts": "^0.16.1",
     "react-vis": "^1.11.7",
     "reactstrap": "^8.9.0",
+    "styled-components": "^5.3.3",
     "urql": "^2.0.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.8",
-    "@babel/preset-env": "^7.14.8",
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.0",
     "@babel/preset-typescript": "^7.14.5",
     "@testing-library/react": "^12.0.0",
     "@types/jest": "^26.0.24",
     "@types/react": "17.0.14",
     "@types/react-datepicker": "^4.1.7",
+    "@types/react-native": "^0.66.8",
     "@types/react-vis": "^1.11.7",
     "babel-jest": "^27.0.6",
+    "babel-loader": "^8.2.3",
     "babel-preset-next": "^1.4.0",
     "eslint": "7.31.0",
     "eslint-config-next": "11.0.1",
+    "hasura-cli": "^2.0.9",
     "jest": "^27.0.6",
     "ts-node": "^10.1.0",
-    "typescript": "4.3.5"
+    "typescript": "4.3.5",
+    "webpack": "^5.65.0"
   }
 }

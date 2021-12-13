@@ -1,0 +1,18 @@
+{
+  "trigger": true,
+  "modules": [
+    "email-filter-allowlist"
+  ],
+  "parentResource": "niosh1fa4a013",
+  "functionName": "niosh1fa4a013PreSignup",
+  "resourceName": "niosh1fa4a013PreSignup",
+  "parentStack": "auth",
+  "triggerEnvs": [],
+  "triggerDir": "/usr/local/lib/node_modules/@aws-amplify/cli/node_modules/@aws-amplify/amplify-category-auth/provider-utils/awscloudformation/triggers/PreSignup",
+  "triggerTemplate": "PreSignup.json.ejs",
+  "triggerEventPath": "PreSignup.event.json",
+  "roleName": "niosh1fa4a013PreSignup",
+  "skipEdit": true,
+  "DOMAINALLOWLIST": "'college.harvard.edu, cdc.gov'",
+  "enableCors": false
+}
