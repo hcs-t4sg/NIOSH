@@ -82,32 +82,84 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
     var lab2_hum_arr = [];
     var lab2_temp_arr = [];
     var hour = 0;
-
     for (let entry of datas.observations) {
       if (entry.lab == props.lab1) {
+        if (entry.temperature == null) {
+          entry.temperature = -1;
+        }
+        if (entry.humidity == null) {
+          entry.humidity = -1;
+        }
         var hour = new Date(entry.time).getTime();
         if (hour > new Date(props.startDate).getTime()) {
           if (hour < new Date(props.endDate).getTime()) {
-            lab1_hum_arr.push({ x: hour, y: entry.humidity });
-            lab1_temp_arr.push({
-              x: hour,
-              y: entry.temperature,
-            });
+            if (entry.humidity > -1) {
+              lab1_hum_arr.push({ x: hour, y: entry.humidity });
+            }
+            if (entry.temperature > -1) {
+              lab1_temp_arr.push({
+                x: hour,
+                y: entry.temperature,
+              });
+            }
           }
         }
       }
       if (entry.lab == props.lab2) {
+        if (entry.temperature == null) {
+          entry.temperature = -1;
+        }
+        if (entry.humidity == null) {
+          entry.humidity = -1;
+        }
         var hour = new Date(entry.time).getTime();
         if (hour > new Date(props.startDate).getTime()) {
           if (hour < new Date(props.endDate).getTime()) {
-            lab2_hum_arr.push({ x: hour, y: entry.humidity });
-            lab2_temp_arr.push({
-              x: hour,
-              y: entry.temperature,
-            });
+            if (entry.humidity > -1) {
+              lab2_hum_arr.push({ x: hour, y: entry.humidity });
+            }
+            if (entry.temperature > -1) {
+              lab2_temp_arr.push({
+                x: hour,
+                y: entry.temperature,
+              });
+            }
           }
         }
       }
+    }
+    console.log(lab1_temp_arr);
+    console.log(lab1_hum_arr);
+    console.log(lab2_temp_arr);
+    console.log(lab2_hum_arr);
+    const hour_sp = new Date(props.startDate).getTime();
+    if (lab1_temp_arr.length == 0) {
+      console.log(lab1_temp_arr);
+      lab1_temp_arr.push({
+        x: hour_sp,
+        y: null,
+      });
+    }
+    if (lab1_hum_arr.length == 0) {
+      console.log(lab1_hum_arr);
+      lab1_hum_arr.push({
+        x: hour_sp,
+        y: null,
+      });
+    }
+    if (lab2_temp_arr.length == 0) {
+      console.log(lab2_temp_arr);
+      lab2_temp_arr.push({
+        x: hour_sp,
+        y: null,
+      });
+    }
+    if (lab2_hum_arr.length == 0) {
+      console.log(lab2_hum_arr);
+      lab2_hum_arr.push({
+        x: hour_sp,
+        y: null,
+      });
     }
     return [lab1_temp_arr, lab1_hum_arr, lab2_temp_arr, lab2_hum_arr];
   }
@@ -329,7 +381,7 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
             width={1000}
             height={800}
             margin={{ left: 100, right: 10, top: 10, bottom: 300 }}
-            yDomain={[50, 100]}
+            yDomain={[0, 100]}
           >
             <VerticalGridLines />
             <HorizontalGridLines />
