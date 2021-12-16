@@ -159,6 +159,7 @@ const LabDataCompare: React.FC = (props) => {
             <FormControl fullWidth>
               <label>Start and end dates</label>
               <DatePicker
+                maxDate={new Date(2021, 7)}
                 selectsRange={true}
                 startDate={startDate}
                 endDate={endDate}
