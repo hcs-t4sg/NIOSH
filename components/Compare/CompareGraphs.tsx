@@ -234,7 +234,7 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
       <center>
         <Loader
           type="Puff"
-          color="#4ce4a9"
+          color="#3576cb"
           height={50}
           width={50}
           timeout={4000} //3 secs
