@@ -4,6 +4,12 @@ import Feature from "../components/Feature/Feature";
 import About from "../components/About/About";
 import Predict from "../components/Predict/predict";
 import LabDataView from "../components/LabDataView/LabDataView";
+import {
+  AmplifyAuthenticator,
+  withAuthenticator,
+  AmplifySignOut,
+  AmplifySignUp,
+} from "@aws-amplify/ui-react";
 
 const Index = () => {
   return (
@@ -18,4 +24,4 @@ const Index = () => {
     </Layout>
   );
 };
-export default Index;
+export default withAuthenticator(Index);

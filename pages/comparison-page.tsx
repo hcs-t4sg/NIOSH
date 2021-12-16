@@ -5,6 +5,13 @@ import About from "../components/About/About";
 import Compare from "../components/Compare/Compare";
 import LabDataView from "../components/LabDataView/LabDataView";
 
+import {
+  AmplifyAuthenticator,
+  withAuthenticator,
+  AmplifySignOut,
+  AmplifySignUp,
+} from "@aws-amplify/ui-react";
+
 const Index = () => {
   return (
     <Layout pageTitle="T4SG Nextjs">
@@ -18,4 +25,4 @@ const Index = () => {
     </Layout>
   );
 };
-export default Index;
+export default withAuthenticator(Index);

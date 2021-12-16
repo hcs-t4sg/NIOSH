@@ -7,6 +7,18 @@ import LabDataView from "../components/LabDataView/LabDataView";
 import HomePage from "../pages/home-page";
 import Button from "@mui/material/Button";
 
+import {
+  AmplifyAuthenticator,
+  withAuthenticator,
+  AmplifySignOut,
+  AmplifySignUp,
+} from "@aws-amplify/ui-react";
+
+import { Amplify } from "aws-amplify";
+import awsExports from "../src/aws-exports";
+
+Amplify.configure({ ...awsExports, ssr: true });
+
 const Index = () => {
   return (
     <Layout pageTitle="T4SG Nextjs">
@@ -20,4 +32,4 @@ const Index = () => {
     </Layout>
   );
 };
-export default Index;
+export default withAuthenticator(Index);

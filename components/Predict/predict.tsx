@@ -31,8 +31,8 @@ import {
 import LabDataPredict from "../LabDataPredict/LabDataPredict";
 
 const Predict = () => {
-  // const parameters = ["humidity", "temperature"];
-  const parameters = ["temperature"];
+  const parameters = ["humidity", "temperature"];
+  // const parameters = ["temperature"];
   const [param, setParam] = useState<string | null>(null);
 
   const labs = [

@@ -1,0 +1,28 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-nioshdashboard-dev-101418-authRole",
+      "UnauthRoleArn": "arn:aws:iam::646914488586:role/amplify-nioshdashboard-dev-101418-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::646914488586:role/amplify-nioshdashboard-dev-101418-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-nioshdashboard-dev-101418-deployment",
+      "UnauthRoleName": "amplify-nioshdashboard-dev-101418-unauthRole",
+      "StackName": "amplify-nioshdashboard-dev-101418",
+      "StackId": "arn:aws:cloudformation:us-east-1:646914488586:stack/amplify-nioshdashboard-dev-101418/d82d0030-5e82-11ec-a20e-12ae3af2862f",
+      "AmplifyAppId": "dm0wx34lq5zo9",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-nioshdashboard-dev-101418-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "nioshdashboard0925ef30": {}
+      },
+      "function": {
+        "nioshdashboard0925ef30PreSignup": {
+          "DOMAINALLOWLIST": "cdc.gov, college.harvard.edu",
+          "deploymentBucketName": "amplify-nioshdashboard-dev-101418-deployment",
+          "s3Key": "amplify-builds/nioshdashboard0925ef30PreSignup-7169612b6e72556b306c-build.zip"
+        }
+      }
+    }
+  }
+}
