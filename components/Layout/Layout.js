@@ -26,7 +26,7 @@ const Layout = (props) => {
       <div>
         <Navbar bg="dark" variant="dark">
           <Container>
-            <Navbar.Brand href="/">NIOSH CDC App Name</Navbar.Brand>
+            <Navbar.Brand href="/">NIOSH Lab Data & Predictions</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
