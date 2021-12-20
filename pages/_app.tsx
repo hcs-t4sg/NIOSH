@@ -30,7 +30,7 @@ function App({ Component, pageProps }: AppProps) {
       <UrqlContainer>
         <Layout />
         <Component {...pageProps} />
-        <AmplifySignOut />
+        {/* <AmplifySignOut /> */}
       </UrqlContainer>
     </AmplifyAuthenticator>
   );

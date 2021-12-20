@@ -13,15 +13,15 @@ import {
 
 const Index = () => {
   return (
-    <Layout pageTitle="T4SG Nextjs">
-      <div className="shadow-lg p-3 mb-5 bg-light rounded">
-        <h3 className="font-weight-normal text-dark">
-          {" "}
-          <span className="t4sg-color"> Lab Condition Predictor</span>
-        </h3>
-      </div>
-      <Predict />
-    </Layout>
+    // <Layout pageTitle="T4SG Nextjs">
+    //   <div className="shadow-lg p-3 mb-5 bg-light rounded">
+    //     <h3 className="font-weight-normal text-dark">
+    //       {" "}
+    //       <span className="t4sg-color"> Lab Condition Predictor</span>
+    //     </h3>
+    //   </div>
+    <Predict />
+    // </Layout>
   );
 };
 export default withAuthenticator(Index);
