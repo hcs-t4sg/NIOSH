@@ -1,6 +1,6 @@
 node_modules
 .next/
-secrets.js
+# secrets.js
 .DS_Store
 
 #amplify-do-not-edit-begin
