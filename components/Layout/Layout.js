@@ -32,7 +32,6 @@ const Layout = (props) => {
               <Nav className="me-auto">
                 <Nav.Link href="/">Compare Labs</Nav.Link>
                 <Nav.Link href="/predictions">Predictions</Nav.Link>
-                {/* <AmplifySignOut /> */}
               </Nav>
               <Nav>
                 <AmplifySignOut />
