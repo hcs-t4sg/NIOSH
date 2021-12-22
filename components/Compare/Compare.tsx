@@ -196,7 +196,7 @@ const LabDataCompare: React.FC = (props) => {
         </Row>
         <Row>
           {displayGraph == true ? (
-            <Button href="/comparison-page/">Clear Predictions</Button>
+            <Button href="/">Clear Comparison</Button>
           ) : null}
         </Row>
       </Container>

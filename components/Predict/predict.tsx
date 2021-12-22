@@ -304,7 +304,7 @@ const Predict = () => {
         </Row>
         <Row>
           {displayGraph == true ? (
-            <Button href="/predict-page/">Clear Predictions</Button>
+            <Button href="/predictions/">Clear Predictions</Button>
           ) : null}
         </Row>
       </Container>
