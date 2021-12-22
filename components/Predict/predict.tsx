@@ -9,11 +9,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import DatePicker from "react-datepicker";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
 import "react-datepicker/dist/react-datepicker.css";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -33,7 +28,7 @@ import LabDataPredict from "../LabDataPredict/LabDataPredict";
 const Predict = () => {
   const parameters = ["humidity", "temperature"];
   // const parameters = ["temperature"];
-  const [param, setParam] = useState<string | null>(null);
+  const [param, setParam] = useState<number | null>(null);
 
   const labs = [
     "H309",
@@ -49,7 +44,7 @@ const Predict = () => {
     "TB15",
   ];
 
-  const [lab, setLab] = useState<string | null>(null);
+  const [lab, setLab] = useState<number | null>(null);
 
   const models_names = ["svr_lin", "svr_rbf", "svr_poly"];
   const models = [
@@ -57,14 +52,14 @@ const Predict = () => {
     "Support vector regression: radial basis function",
     "Support vector regression: polynomial",
   ];
-  const [model, setModel] = useState<string | null>(null);
+  const [model, setModel] = useState<number | null>(null);
 
   const [month1, setMonth1] = useState<number | null>();
   const [day1, setDay1] = useState<number | null>();
   const [month2, setMonth2] = useState<number | null>();
   const [day2, setDay2] = useState<number | null>();
 
-  const [selectedDate1, setSelectedDate1] = useState<Date>(null);
+  const [selectedDate1, setSelectedDate1] = useState<Date | null>(null);
 
   const handleDateChange1 = (date: Date) => {
     if (date != undefined) {
@@ -74,7 +69,7 @@ const Predict = () => {
     }
   };
 
-  const [selectedDate2, setSelectedDate2] = useState(null);
+  const [selectedDate2, setSelectedDate2] = useState<Date | null>(null);
 
   const handleDateChange2 = (date: Date) => {
     if (date != undefined) {
@@ -117,9 +112,11 @@ const Predict = () => {
     setDisplayGraph(true);
   }
 
-  function setDateRange(dates) {
-    handleDateChange1(dates[0]);
-    handleDateChange2(dates[1]);
+  function setDateRange(dates: Array<Date> | null) {
+    if (dates != null) {
+      handleDateChange1(dates[0]);
+      handleDateChange2(dates[1]);
+    }
   }
 
   return (
@@ -136,7 +133,7 @@ const Predict = () => {
                 labelId="category-select-label"
                 value={param}
                 onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                  setParam(event.target.value as string);
+                  setParam(event.target.value as number);
                 }}
               >
                 {parameters.map((parameter, index) => {
@@ -155,7 +152,7 @@ const Predict = () => {
                 labelId="category-select-label"
                 value={lab}
                 onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                  setLab(event.target.value as string);
+                  setLab(event.target.value as number);
                 }}
               >
                 {labs.map((lab, index) => {
@@ -174,7 +171,7 @@ const Predict = () => {
                 labelId="category-select-label"
                 value={model}
                 onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                  setModel(event.target.value as string);
+                  setModel(event.target.value as number);
                 }}
               >
                 {models.map((model, index) => {
@@ -198,6 +195,7 @@ const Predict = () => {
                 startDate={selectedDate1}
                 endDate={selectedDate2}
                 onChange={(update) => {
+                  // @ts-ignore
                   setDateRange(update);
                 }}
                 // isClearable={true}
@@ -249,7 +247,7 @@ const Predict = () => {
                 labelId="category-select-label"
                 value={setback}
                 onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                  setSetback(event.target.value as string);
+                  setSetback(event.target.value as number);
                 }}
               >
                 {setbacks.map((setback, index) => {

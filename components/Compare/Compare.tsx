@@ -62,7 +62,7 @@ const LabDataCompare: React.FC = (props) => {
   {
     /* Set up date picker*/
   }
-  const [dateRange, setDateRange] = useState<Array<string> | Array<null>>([
+  const [dateRange, setDateRange] = useState<Array<Date> | Array<null>>([
     null,
     null,
   ]);
@@ -164,6 +164,7 @@ const LabDataCompare: React.FC = (props) => {
                 startDate={startDate}
                 endDate={endDate}
                 onChange={(update) => {
+                  // @ts-ignore
                   setDateRange(update);
                 }}
                 isClearable={true}
@@ -188,8 +189,10 @@ const LabDataCompare: React.FC = (props) => {
               <CompareGraphs
                 lab1={labSelectable[parseInt(lab1select)]}
                 lab2={labSelectable[parseInt(lab2select)]}
-                startDate={startDate}
-                endDate={endDate}
+                // @ts-ignore
+                startDate={startDate.toString()}
+                // @ts-ignore
+                endDate={endDate.toString()}
               />
             ) : null}
           </Col>
