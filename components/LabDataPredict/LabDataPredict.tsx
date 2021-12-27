@@ -172,9 +172,11 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
           <LineMarkSeries
             animation={true}
             curve={"curveMonotoneX"}
+            //@ts-ignore
             onNearestX={(d) => setTooltip([d])}
             data={prepareData(posts)}
             color={"#FF6978"}
+            //@ts-ignore
             size={2}
             strokeWidth={3}
             strokeStyle={"dashed"}

@@ -194,9 +194,11 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
           <LineMarkSeries
             animation={true}
             curve={"curveNatural"}
+            //@ts-ignore
             onNearestX={(d) => setTooltip([d])}
             data={prepareData(posts)}
             opacity={1}
+            //@ts-ignore
             size={0}
             style={{ fill: "none" }}
           />

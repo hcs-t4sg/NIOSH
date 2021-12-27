@@ -2,7 +2,7 @@ import Layout from "../components/Layout/Layout";
 import Hero from "../components/Hero/Hero";
 import Feature from "../components/Feature/Feature";
 import About from "../components/About/About";
-import Predict from "../components/Predict/predict";
+import Predict from "../components/Predict/Predict";
 import LabDataView from "../components/LabDataView/LabDataView";
 import {
   AmplifyAuthenticator,

@@ -7,7 +7,8 @@ type UrqlContainerProps = {
     children: ReactNode
 };
 
-export function UrqlContainer({ children }: UrqlContainerProps) {  
+export function UrqlContainer({ children }: UrqlContainerProps) { 
+   //@ts-ignore 
     const token = null;
     urqlClient = useMemo(() => {
       return createClient({

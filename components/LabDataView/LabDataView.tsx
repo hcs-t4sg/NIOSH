@@ -27,6 +27,7 @@ export type LabCategory = {
 const LabDataView: React.FC = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  //@ts-ignore
   const labsData = [];
   const labels = [{title: "Humidity", color: '#FF6978', strokeWidth: 20}, {title: "Temperature", color: '#352D39', strokeWidth: 20, strokeStyle: 'dashed'}]
   
@@ -96,6 +97,7 @@ const LabDataView: React.FC = (props) => {
   }
   else {
     for (let entry of data.observations) {  
+      //@ts-ignore
       if (labsData.includes(entry.lab)) {
       console.log("Done")
       }
@@ -113,11 +115,15 @@ const LabDataView: React.FC = (props) => {
     setAnchorEl(null);
     const index = Math.floor((Math.random())*4)
     var hour = 0
-    for (let entry of data.observations) {  
+    for (let entry of data.observations) { 
+      //@ts-ignore 
       if (entry.lab == labsData[index]) {
         var hour = new Date(entry.time).getTime();
+        //@ts-ignore
         if (hour > new Date(startDate).getTime() && hour < new Date(endDate).getTime()) {
+        //@ts-ignore
         set_labhum(lab_hum.concat({x: hour, y: entry.humidity}));
+        //@ts-ignore
         set_labtemp(lab_temp.concat({x: hour, y: entry.temperature}));
         t454_hum.push({x: hour, y: entry.humidity})
 
@@ -129,12 +135,14 @@ const LabDataView: React.FC = (props) => {
     };
     
     console.log("HUMIDITY IS:" + t454_hum)
+    //@ts-ignore
     console.log("Start date get time is " + startDate + new Date(startDate).getTime())
  
     
 
   };
 
+  //@ts-ignore
   const handleMenuItem = event => {
     const { myLab } = event.currentTarget.dataset
     console.log(myLab)
@@ -145,11 +153,15 @@ const LabDataView: React.FC = (props) => {
     for (let entry of data.observations) {  
       if (entry.lab == myLab) {
         var hour = new Date(entry.time).getTime();
+        //@ts-ignore
         if (hour > new Date(startDate).getTime()) {
+          //@ts-ignore
           if (hour < new Date(endDate).getTime()) {
           console.log("this is also working")
+          //@ts-ignore
           lab_hum = lab_hum.concat({x: hour, y: entry.humidity})
           set_labhum(lab_hum);
+          //@ts-ignore
           lab_temp = lab_temp.concat({x: hour, y: entry.temperature}) 
           set_labtemp(lab_temp);
           t454_hum.push({x: hour, y: entry.humidity})
@@ -163,6 +175,7 @@ const LabDataView: React.FC = (props) => {
     console.log(lab_hum)
     console.log(lab_temp)
     console.log(t454_hum)
+    //@ts-ignore
     console.log("Start date get time is " + startDate + new Date(startDate).getTime())
  
     
@@ -191,6 +204,7 @@ const LabDataView: React.FC = (props) => {
               <Select
                 labelId="category-select-label"
                 value={lab1select}
+                //@ts-ignore
                 onInput={(event: React.ChangeEvent<{ value: unknown }>) => {
                   handleMenuItem; 
                 }}
@@ -217,6 +231,7 @@ const LabDataView: React.FC = (props) => {
                 startDate={startDate}
                 endDate={endDate}
                 onChange={(update) => {
+                  //@ts-ignore
                   setDateRange(update);
                 }}
                 isClearable={true}
@@ -263,6 +278,7 @@ const LabDataView: React.FC = (props) => {
             curve={'curveMonotoneX'}
             color={'#FF6978'}
             style= {{fill: 'none'}}
+            //@ts-ignore
             strokeWidth = {4}
             data={lab_hum}
             opacity = {1}
@@ -273,6 +289,7 @@ const LabDataView: React.FC = (props) => {
             color={'#352D39'}
             style= {{fill: 'none'}}
             strokeStyle = {'dashed'}
+            //@ts-ignore
             strokeWidth = {4}
             data={lab_temp}
             opacity = {1}

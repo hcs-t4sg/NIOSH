@@ -51,6 +51,7 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
   const [tooltip3, setTooltip3] = useState([]);
   const [tooltip4, setTooltip4] = useState([]);
   const open = Boolean(anchorEl);
+  //@ts-ignore
   var labsData = [];
 
   {
@@ -72,10 +73,13 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
   };
 
   function displayGraphFunct() {
+    //@ts-ignore
     console.log(labsData);
+    //@ts-ignore
     parseData(labsData);
   }
 
+  //@ts-ignore
   function parseData(datas) {
     var lab1_hum_arr = [];
     var lab1_temp_arr = [];
@@ -91,7 +95,9 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
           entry.humidity = -1;
         }
         var hour = new Date(entry.time).getTime();
+        //@ts-ignore
         if (hour > new Date(props.startDate).getTime()) {
+          //@ts-ignore
           if (hour < new Date(props.endDate).getTime()) {
             if (entry.humidity > -1) {
               lab1_hum_arr.push({ x: hour, y: entry.humidity });
@@ -113,7 +119,9 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
           entry.humidity = -1;
         }
         var hour = new Date(entry.time).getTime();
+        //@ts-ignore
         if (hour > new Date(props.startDate).getTime()) {
+          //@ts-ignore
           if (hour < new Date(props.endDate).getTime()) {
             if (entry.humidity > -1) {
               lab2_hum_arr.push({ x: hour, y: entry.humidity });
@@ -132,6 +140,7 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
     console.log(lab1_hum_arr);
     console.log(lab2_temp_arr);
     console.log(lab2_hum_arr);
+    //@ts-ignore
     const hour_sp = new Date(props.startDate).getTime();
     if (lab1_temp_arr.length == 0) {
       console.log(lab1_temp_arr);
@@ -222,6 +231,7 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
     console.log("Fetching");
   } else {
     for (let entry of data.observations) {
+      //@ts-ignore
       if (labsData.includes(entry.lab)) {
         console.log("Done");
       } else {
@@ -231,7 +241,6 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
   }
   if (fetching)
     return (
-      <center>
         <Loader
           type="Puff"
           color="#3576cb"
@@ -239,14 +248,17 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
           width={50}
           timeout={4000} //3 secs
         />
-      </center>
     );
 
   console.log(data);
 
+  //@ts-ignore
   var data_graph_lab1_temp = [];
+  //@ts-ignore
   var data_graph_lab1_hum = [];
+  //@ts-ignore
   var data_graph_lab2_temp = [];
+  //@ts-ignore
   var data_graph_lab2_hum = [];
 
   if (data != undefined) {
@@ -260,11 +272,17 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
   const labLabelsTemp = ["First Lab Temperature", "Second Lab Temperature"];
   const labLabelsHum = ["First Lab Temperature", "Second Lab Temperature"];
 
+  //@ts-ignore
   return (
+    //@ts-ignore
     <>
-      {data_graph_lab1_temp != [] &&
+      {//@ts-ignore
+      data_graph_lab1_temp != [] &&
+      //@ts-ignore
       data_graph_lab1_hum != [] &&
+      //@ts-ignore
       data_graph_lab2_temp != [] &&
+      //@ts-ignore
       data_graph_lab2_hum != [] ? (
         <>
           <Row>
@@ -321,22 +339,28 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
             <LineMarkSeries
               curve={"curveMonotoneX"}
               color={"#FF6978"}
+              //@ts-ignore
               size={2}
               strokeWidth={3}
               strokeStyle={"dashed"}
+              //@ts-ignore
               onNearestXY={(d) => setTooltip1([d, "Hovering on First Lab"])}
               style={{ fill: "none" }}
+              //@ts-ignore
               data={data_graph_lab1_temp}
               opacity={1}
             />
             <LineMarkSeries
               curve={"curveMonotoneX"}
               color={"#352D39"}
+              //@ts-ignore
               size={2}
               strokeWidth={3}
               strokeStyle={"dashed"}
+              //@ts-ignore
               onNearestXY={(d) => setTooltip2([d, "Hovering on Second Lab"])}
               style={{ fill: "none" }}
+              //@ts-ignore
               data={data_graph_lab2_temp}
               opacity={1}
             />
@@ -395,22 +419,28 @@ const CompareGraphs: React.FC<CompareProps> = (props) => {
             <LineMarkSeries
               curve={"curveMonotoneX"}
               color={"#FF6978"}
+              //@ts-ignore
               size={2}
               strokeWidth={3}
               strokeStyle={"dashed"}
+              //@ts-ignore
               onNearestXY={(d) => setTooltip3([d, "Hovering on First Lab"])}
               style={{ fill: "none" }}
+              //@ts-ignore
               data={data_graph_lab1_hum}
               opacity={1}
             />
             <LineMarkSeries
               curve={"curveMonotoneX"}
               color={"#352D39"}
+              //@ts-ignore
               size={2}
               strokeWidth={3}
               strokeStyle={"dashed"}
+              //@ts-ignore
               onNearestXY={(d) => setTooltip4([d, "Hovering on Second Lab"])}
               style={{ fill: "none" }}
+              //@ts-ignore
               data={data_graph_lab2_hum}
               opacity={1}
             />

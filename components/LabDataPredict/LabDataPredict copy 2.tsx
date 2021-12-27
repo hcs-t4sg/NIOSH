@@ -49,12 +49,14 @@ const LabDataCompare: React.FC<{ title: string }> = (props) => {
   const [graphData, setGraphData] = useState(initial);
   const [indicator, setIndicator] = useState(0);
 
+  //@ts-ignore
   function datediff(first, second) {
     // Take the difference between the dates and divide by milliseconds per day.
     // Round to nearest whole number to deal with DST.
     return Math.round((second - first) / (1000 * 60 * 60 * 24));
   }
 
+  //@ts-ignore
   const fetchPrediction = async (model, lab, param, timestep, setback) => {
     // const lab = "H353";
     // const param = "humidity";
@@ -66,6 +68,7 @@ const LabDataCompare: React.FC<{ title: string }> = (props) => {
     return data;
   };
 
+  //@ts-ignore
   function fetchPredictions2(model, lab, param, timestep1, timestep2, setback) {
     fetch(
       `https://pred-flask-app.herokuapp.com/predictmany/${lab}/${param}/${timestep1}/${timestep2}/${setback}/${model}`,
@@ -84,12 +87,19 @@ const LabDataCompare: React.FC<{ title: string }> = (props) => {
       });
   }
 
+  //@ts-ignore
   const fetchPredictions = async (
+    //@ts-ignore
     model,
+    //@ts-ignore
     lab,
+    //@ts-ignore
     param,
+    //@ts-ignore
     timestep1,
+    //@ts-ignore
     timestep2,
+    //@ts-ignore
     setback
   ) => {
     // const lab = "H353";
@@ -107,10 +117,15 @@ const LabDataCompare: React.FC<{ title: string }> = (props) => {
   // var graphData = [];
 
   function get_data_predictions(
+    //@ts-ignore
     model,
+    //@ts-ignore
     lab,
+    //@ts-ignore
     dateRange: Date[],
+    //@ts-ignore
     parameter,
+    //@ts-ignore
     setback
   ) {
     var data_for_graph: { x: { date: number }; y: { y_val: any } }[] = [];
@@ -128,6 +143,7 @@ const LabDataCompare: React.FC<{ title: string }> = (props) => {
     );
     var pred = myPred;
     // console.log(myPred);
+    //@ts-ignore
     var result = pred["result"];
     if (result == null) {
       result = [];
@@ -205,6 +221,7 @@ const LabDataCompare: React.FC<{ title: string }> = (props) => {
             "aria-labelledby": "basic-button",
           }}
           value={otherinfo}
+          //@ts-ignore
           onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
             setOtherInfo(event.target.value as number);
           }}
@@ -241,6 +258,7 @@ const LabDataCompare: React.FC<{ title: string }> = (props) => {
             <DiscreteColorLegend items={labLabels} orientation={"horizontal"} />
             <LineMarkSeries
               curve={"curveMonotoneX"}
+              //@ts-ignore
               data={graphData}
               opacity={1}
               style={{ fill: "none" }}
