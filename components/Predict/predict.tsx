@@ -30,9 +30,10 @@ const Predict = () => {
   // const parameters = ["temperature"];
   const [param, setParam] = useState<number | null>(null);
 
-  const labs = [
+  // currently, we only have temperature and humidity data for certain labs:
+
+  const labsTemp = [
     "H309",
-    "H351",
     "H353",
     "H355",
     "H424",
@@ -43,6 +44,8 @@ const Predict = () => {
     "TB01",
     "TB15",
   ];
+
+  const labsHum = ["H309", "H353", "T454", "TB01"];
 
   const [lab, setLab] = useState<number | null>(null);
 
@@ -80,7 +83,9 @@ const Predict = () => {
   };
 
   const setbacks = ["Yes", "No"];
+
   const [setback, setSetback] = useState<number | null>(null);
+  const [outside, setOutside] = useState<string | null>(null);
 
   const [displayGraph, setDisplayGraph] = useState<boolean>(false);
 
@@ -146,25 +151,49 @@ const Predict = () => {
                 })}
               </Select>
             </FormControl>
-            <FormControl fullWidth>
-              <InputLabel id="category-select-label">Lab</InputLabel>
-              <Select
-                labelId="category-select-label"
-                value={lab}
-                onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                  setLab(event.target.value as number);
-                }}
-              >
-                {labs.map((lab, index) => {
-                  return (
-                    <MenuItem key={index} value={index}>
-                      {" "}
-                      {lab}{" "}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+            {param == 1 ? (
+              <FormControl fullWidth>
+                <InputLabel id="category-select-label">Lab</InputLabel>
+                <Select
+                  labelId="category-select-label"
+                  value={lab}
+                  onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+                    setLab(event.target.value as number);
+                  }}
+                >
+                  {labsTemp.map((lab, index) => {
+                    return (
+                      <MenuItem key={index} value={index}>
+                        {" "}
+                        {lab}{" "}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            ) : null}
+            {param == 0 ? (
+              <FormControl fullWidth>
+                <InputLabel id="category-select-label">Lab</InputLabel>
+                <Select
+                  labelId="category-select-label"
+                  value={lab}
+                  onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+                    setLab(event.target.value as number);
+                  }}
+                >
+                  {labsHum.map((lab, index) => {
+                    return (
+                      <MenuItem key={index} value={index}>
+                        {" "}
+                        {lab}{" "}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            ) : null}
+
             <FormControl fullWidth>
               <InputLabel id="category-select-label">Model</InputLabel>
               <Select
@@ -201,46 +230,6 @@ const Predict = () => {
                 // isClearable={true}
               />
             </FormControl>
-            {/* <FormControl fullWidth>
-              <TextField
-                id="standard-basic"
-                label="Starting Month"
-                value={month1}
-                onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                  setMonth1(event.target.value as number);
-                }}
-              ></TextField>
-            </FormControl>
-            <FormControl fullWidth>
-              <TextField
-                id="standard-basic"
-                label="Starting Day"
-                value={day1}
-                onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                  setDay1(event.target.value as number);
-                }}
-              ></TextField>
-            </FormControl>
-            <FormControl fullWidth>
-              <TextField
-                id="standard-basic"
-                label="Ending Month"
-                value={month2}
-                onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                  setMonth2(event.target.value as number);
-                }}
-              ></TextField>
-            </FormControl>
-            <FormControl fullWidth>
-              <TextField
-                id="standard-basic"
-                label="Ending Day"
-                value={day2}
-                onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                  setDay2(event.target.value as number);
-                }}
-              ></TextField>
-            </FormControl> */}
             <FormControl fullWidth>
               <InputLabel id="category-select-label">Setback?</InputLabel>
               <Select
@@ -259,6 +248,20 @@ const Predict = () => {
                   );
                 })}
               </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              {/* <InputLabel id="category-textfield-label">
+                Outside Temperature
+              </InputLabel> */}
+              <TextField
+                id="standard-basic"
+                label="Outside Temperature (°F)"
+                variant="standard"
+                value={outside}
+                onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+                  setOutside(event.target.value as string);
+                }}
+              />
             </FormControl>
           </Col>
         </Row>
@@ -285,18 +288,37 @@ const Predict = () => {
             month2 != null &&
             day2 != null &&
             setback != null &&
+            outside != null &&
             model != null &&
             displayGraph == true ? (
-              <LabDataPredict
-                lab={labs[lab]}
-                parameter={parameters[param]}
-                month1={month1}
-                day1={day1}
-                month2={month2}
-                day2={day2}
-                setback={setback}
-                model={models_names[model]}
-              />
+              <>
+                {param == 1 ? (
+                  <LabDataPredict
+                    lab={labsTemp[lab]}
+                    parameter={parameters[param]}
+                    month1={month1}
+                    day1={day1}
+                    month2={month2}
+                    day2={day2}
+                    setback={setback}
+                    outside={outside}
+                    model={models_names[model]}
+                  />
+                ) : null}
+                {param == 0 ? (
+                  <LabDataPredict
+                    lab={labsHum[lab]}
+                    parameter={parameters[param]}
+                    month1={month1}
+                    day1={day1}
+                    month2={month2}
+                    day2={day2}
+                    setback={setback}
+                    outside={outside}
+                    model={models_names[model]}
+                  />
+                ) : null}
+              </>
             ) : null}
           </Col>
         </Row>
