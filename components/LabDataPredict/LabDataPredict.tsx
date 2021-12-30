@@ -46,6 +46,7 @@ interface PredProps {
   day2: number;
   setback: number;
   model: string;
+  outside: string;
 }
 
 const defaultPosts: IPost[] = [];
@@ -59,8 +60,15 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
   const [error, setError]: [string, (error: string) => void] =
     React.useState("");
 
+  const outsideint = props.outside.split(".")[0];
+  var outsidedec = props.outside.split(".")[1];
+
+  if (outsidedec == undefined) {
+    outsidedec = "0";
+  }
+
   const url =
-    "https://pred-flask-app.herokuapp.com/predictmany3/" +
+    "https://pred-flask-app.herokuapp.com/predictmany4/" +
     props.lab +
     "/" +
     props.parameter +
@@ -74,6 +82,10 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
     props.day2 +
     "/" +
     props.setback +
+    "/" +
+    outsideint +
+    "/" +
+    outsidedec +
     "/" +
     props.model;
 
@@ -166,7 +178,7 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
             }}
           />
           {/* <YAxis title="Temperature" /> */}
-          <YAxis title="Temperature (deg F)" />
+          <YAxis title="Temperature (°F)" />
           {/* <DiscreteColorLegend items={labLabels} orientation={"horizontal"} /> */}
           {/* {console.log(prepareData(posts))} */}
           <LineMarkSeries
