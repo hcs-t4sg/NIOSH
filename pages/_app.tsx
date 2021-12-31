@@ -14,7 +14,7 @@ import {
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
 
-Amplify.configure({ ...awsExports, ssr: true });
+Amplify.configure({ ...awsExports, ssr: false });
 
 // function MyApp({ Component, pageProps }: AppProps) {
 //   return (
