@@ -270,7 +270,7 @@ const Predict = () => {
         <Row>
           <Col>
             <Button variant="contained" onClick={displayGraphFunct}>
-              Graph Predictions!
+              Graph Predictions
             </Button>
           </Col>
         </Row>

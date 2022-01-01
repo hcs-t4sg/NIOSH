@@ -130,6 +130,7 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
   }
 
   function getTimeString(hour: string) {
+    console.log(hour);
     if (parseInt(hour) == 12) {
       return "12PM";
     } else if (parseInt(hour) > 12) {
@@ -148,8 +149,9 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
               <h4>Mouse hovering at:</h4>
               <p>
                 x = {tooltip[0]["x"].substring(0, 5)} |{" "}
-                {getTimeString(tooltip[0]["x"].substring(7, 10))}
+                {getTimeString(tooltip[0]["x"].substring(6, 10))}
               </p>
+              {/* {console.log(tooltip[0]["x"].substring(6, 10))} */}
               <p>y = {tooltip[0]["y"].toString().substring(0, 4)} degrees F</p>
             </>
           ) : null}
@@ -178,7 +180,12 @@ const LabDataCompare: React.FC<PredProps> = (props) => {
             }}
           />
           {/* <YAxis title="Temperature" /> */}
-          <YAxis title="Temperature (°F)" />
+          {props.parameter == "temperature" ? (
+            <YAxis title="Temperature (°F)" />
+          ) : (
+            <YAxis title="Humidity (%)" />
+          )}
+          {/* <YAxis title="Temperature (°F)" /> */}
           {/* <DiscreteColorLegend items={labLabels} orientation={"horizontal"} /> */}
           {/* {console.log(prepareData(posts))} */}
           <LineMarkSeries
